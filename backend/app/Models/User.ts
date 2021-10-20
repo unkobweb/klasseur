@@ -10,7 +10,7 @@ export default class User extends BaseModel {
   @column()
   public username: string;
 
-  @column()
+  @column({serializeAs: null})
   public password: string;
 
   @column.dateTime({ autoCreate: true })
@@ -25,7 +25,7 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
-  
+
   @beforeCreate()
   public static async createUUID(user: User) {
     user.id = uuidv4()
