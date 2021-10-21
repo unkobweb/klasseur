@@ -26,7 +26,7 @@ Route.group(() => {
   Route.group(() => {
 
     Route.group(() => {
-      Route.post('/',"UsersController.create")
+      Route.post('/',"UsersController.create").middleware('isRoot')
     }).prefix('user')
 
   }).middleware('auth')

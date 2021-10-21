@@ -4,12 +4,6 @@ import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class UsersController {
     async create({auth, request, response}: HttpContextContract){
-        // Check if user is root
-        const user = await auth.authenticate();
-        if (user.username !== "root") {
-            return response.forbidden('Forbidden');
-        }
-
         const {username, password} = await request.validate(CreateUserValidator);
 
         const newUser = new User();
@@ -17,6 +11,7 @@ export default class UsersController {
         newUser.password = password;
         await newUser.save();
 
-        return newUser;
+        // Find again to get the uuid of created user in the response
+        return await User.findBy('username',newUser.username);
     }
 }
