@@ -26,9 +26,10 @@ Route.group(() => {
   Route.group(() => {
 
     Route.group(() => {
-      Route.post('/',"UsersController.create").middleware('isRoot')
-    }).prefix('user')
+      Route.post('/',"UsersController.create").middleware('isRoot');
+      Route.patch('/change-password', "UsersController.changePassword");
+    }).prefix('/user');
 
-  }).middleware('auth')
+  }).middleware('auth');
 
-}).prefix('api')
+}).prefix('/api');
