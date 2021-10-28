@@ -12,4 +12,14 @@ export default class AuthController {
             return response.badRequest('Invalid credentials');
         }
     }
+
+    async authenticate({auth, response}: HttpContextContract){
+        const user = await auth.use('api').authenticate() // Try to get the user linked to the bearer token
+        const serializedUser = user.serialize() // Serialize the user
+        response.status(200).send(serializedUser) // Send it back
+    }
+
+    async logout({response}: HttpContextContract){
+        response.status(200)
+    }
 }

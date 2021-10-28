@@ -25,6 +25,9 @@ Route.group(() => {
   Route.post('/login', "AuthController.login")
   Route.group(() => {
 
+    Route.get('/authenticate',"AuthController.authenticate")
+    Route.get('/logout',"AuthController.logout")
+
     Route.group(() => {
       Route.post('/',"UsersController.create").middleware('isRoot');
       Route.patch('/change-password', "UsersController.changePassword");

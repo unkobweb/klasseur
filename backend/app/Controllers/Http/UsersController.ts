@@ -4,7 +4,7 @@ import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator';
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class UsersController {
-    async create({auth, request, response}: HttpContextContract){
+    async create({request}: HttpContextContract){
         const {username, password} = await request.validate(CreateUserValidator);
 
         const newUser = new User();
