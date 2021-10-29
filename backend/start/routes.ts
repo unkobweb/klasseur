@@ -35,6 +35,8 @@ Route.group(() => {
 
     Route.group(() => {
       Route.get('/me', "DocumentsController.me")
+      Route.post('/upload', "DocumentsController.upload")
+      Route.get('/download/:uuid', "DocumentsController.download")
     }).prefix('/documents')
 
   }).middleware('auth');
