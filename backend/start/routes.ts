@@ -33,6 +33,10 @@ Route.group(() => {
       Route.patch('/change-password', "UsersController.changePassword");
     }).prefix('/user');
 
+    Route.group(() => {
+      Route.get('/me', "DocumentsController.me")
+    }).prefix('/documents')
+
   }).middleware('auth');
 
 }).prefix('/api');
