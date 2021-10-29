@@ -6,8 +6,8 @@ export default class Documents extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('uuid').primary()
-      table.string("filename")
-      table.integer("size").unsigned()
+      table.string("filename").notNullable()
+      table.integer("size").unsigned().notNullable()
       table.uuid('user_uuid')
         .references("users.uuid")
         .onDelete('CASCADE')

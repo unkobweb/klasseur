@@ -1,5 +1,6 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Document from 'App/Models/Document'
+import Tag from 'App/Models/Tag'
 import User from 'App/Models/User'
 
 export default class UserSeeder extends BaseSeeder {
@@ -20,8 +21,25 @@ export default class UserSeeder extends BaseSeeder {
         user_uuid: user.uuid
       })
 
+      await Tag.createMany([
+        {
+          value: "Ordinateur",
+          document_uuid: document.uuid
+        },
+        {
+          value: "Facture",
+          document_uuid: document.uuid
+        },
+        {
+          value: "Juin",
+          document_uuid: document.uuid
+        }
+      ])
+
+      const doc = await Document.query().preload('tags').first()
+
       console.log(user.serialize())
-      console.log(document.serialize())
+      console.log(doc?.serialize())
     }
   }
 }

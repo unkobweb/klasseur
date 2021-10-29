@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import {v4 as uuidv4} from 'uuid'
+import Tag from './Tag'
 
 export default class Document extends BaseModel {
   public static selfAssignPrimaryKey = true
@@ -29,6 +30,12 @@ export default class Document extends BaseModel {
     localKey: "uuid"
   })
   public user: BelongsTo<typeof User>
+
+  @hasMany(() => Tag, {
+    foreignKey: "document_uuid",
+    localKey: "uuid"
+  })
+  public tags: HasMany<typeof Tag>
 
   @beforeCreate()
   public static async createUUID(document: Document) {
