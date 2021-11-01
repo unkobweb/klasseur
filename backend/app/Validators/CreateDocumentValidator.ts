@@ -6,13 +6,12 @@ export default class CreateDocumentValidator {
   }
 
 	public schema = schema.create({
-		filename: schema.string({ trim: true }),
-		file: schema.file()
+		file: schema.file(),
+		tags: schema.string({trim: true})
 	})
 
 	public messages = {
-		'filename.unique': 'Le nom de fichier existe déja',
-		'filename.required': 'Vous devez spécifier un nom',
-		'file.required': 'Vous devez fournir un fichier'
+		'file.required': 'Vous devez fournir un fichier',
+		'tags.required': 'Vous devez fournir un tableau de tag (sépraré par des |, ex: \'facture|ordinateur\')'
 	}
 }

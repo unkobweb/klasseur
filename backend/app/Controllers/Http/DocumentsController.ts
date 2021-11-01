@@ -3,6 +3,7 @@ import Document from 'App/Models/Document'
 import CreateDocumentValidator from 'App/Validators/CreateDocumentValidator'
 import ObjectStoragesController from './ObjectStoragesController'
 import fs from 'fs'
+import Tag from 'App/Models/Tag'
 
 const s3 = new ObjectStoragesController()
 
@@ -12,7 +13,7 @@ export default class DocumentsController {
 
         const documents = await Document.query().preload('user', (userQuery) => {
             userQuery.where("uuid",user.uuid)
-        }).preload('tags')
+        }).preload('tags').orderBy('created_at','desc')
 
         response.send(documents)
     }
@@ -22,15 +23,27 @@ export default class DocumentsController {
 
         const user = await auth.authenticate()
 
+        if (!payload.file.tmpPath){
+            return response.badRequest("Upload file failed")
+        }
+
         const document = await Document.create({
-            filename: payload.filename,
+            filename: payload.file.clientName,
             size: payload.file.size,
             user_uuid: user.uuid
         })
 
-        //@ts-ignore
-        s3.upload(user.uuid, Buffer.from(fs.readFileSync(payload.file.tmpPath)), payload.filename)
+        const tags = payload.tags.split("|")
 
+        await Tag.createMany(tags.map(tag => ({
+            value: tag,
+            document_uuid: document.uuid
+        })))
+
+        await document.load('tags')
+
+        s3.upload(user.uuid, Buffer.from(fs.readFileSync(payload.file.tmpPath)), payload.file.clientName)
+        
         response.send(document)
     }
 
@@ -42,10 +55,10 @@ export default class DocumentsController {
         const document = await Document.findBy('uuid', uuid)
 
         if (!document) {
-            response.notFound("Document not found")
+            return response.notFound("Document not found")
         }
 
-        const buffer = await s3.download(user.uuid, document?.filename)
+        const buffer = await s3.download(user.uuid, document.filename)
 
         response.type('file-content-type-goes-here')
         response.send(buffer)

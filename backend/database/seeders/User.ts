@@ -37,9 +37,6 @@ export default class UserSeeder extends BaseSeeder {
       ])
 
       const doc = await Document.query().preload('tags').first()
-
-      console.log(user.serialize())
-      console.log(doc?.serialize())
     }
   }
 }

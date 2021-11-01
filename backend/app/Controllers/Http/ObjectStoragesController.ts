@@ -18,9 +18,13 @@ export default class ObjectStoragesController {
             {
                 Body: buffer,
                 Bucket: Env.get("S3_BUCKET"),
-                Key: `${userUuid}/${filename}`
+                Key: userUuid + "/" + filename
             },
-            (err => {throw err})
+            (err) => {
+                if (err) {
+                    throw err
+                }
+            }
         )
     }
 
