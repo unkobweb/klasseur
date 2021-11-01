@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <UserMenu/>
-    <v-main>
-      <Nuxt/>
+    <RootMenu/>
+    <v-main>   
+        <Nuxt/>
     </v-main>
   </v-app>
 </template>
@@ -18,11 +18,11 @@ html {
 </style>
 
 <script>
-import UserMenu from '~/components/menus/UserMenu'
+import RootMenu from '~/components/menus/RootMenu'
 
 export default {
-  middleware: ['auth','isNotRoot'],
-  components: {UserMenu},
+  middleware: ['auth','isRoot'],
+  components: {RootMenu},
   data () {
     return {
       clipped: false,

@@ -21,21 +21,19 @@
       </v-list-item>
 
       <v-divider></v-divider>
-      <v-list
-        dense
-        nav
-      >
+      <v-list>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
         >
-          <v-list-item-icon>
+          <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
+          </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title @click="item.onClick()">{{ item.title }}</v-list-item-title>
+            <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -53,33 +51,26 @@
 
 <script>
 export default {
-  name: "UserMenu",
-  data() {
+  name: "RootMenu",
+  data () {
     return {
-        clipped: false,
+      clipped: false,
       drawer: false,
       fixed: false,
-      miniVariant: false,
-      title: 'Klasseur',
       items: [
         {
-          icon: 'mdi-file-document-outline',
-          title: 'Mes documents',
-          onClick: () => this.$router.push('/')
+          icon: 'mdi-monitor-dashboard',
+          title: 'Tableau de bord',
+          to: '/root/dashboard'
         },
         {
-          icon: 'mdi-account',
-          title: 'Mon compte',
-          onClick: () => this.$router.push('/account')
-        },
-        {
-          icon: 'mdi-logout',
-          title: 'Déconnexion',
-          onClick: () => {
-            this.$auth.logout().then(() => this.$router.go(0))
-          }
+          icon: 'mdi-account-supervisor',
+          title: 'Utilisateurs',
+          to: '/root/users'
         }
       ],
+      miniVariant: false,
+      title: 'Klasseur'
     }
   }
 }
