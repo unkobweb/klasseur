@@ -25,7 +25,7 @@
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
-          :to="item.to"
+          @click="item.onClick"
           router
           exact
         >
@@ -61,12 +61,19 @@ export default {
         {
           icon: 'mdi-monitor-dashboard',
           title: 'Tableau de bord',
-          to: '/root/dashboard'
+          onClick: () => this.$router.push('/root/dashboard')
         },
         {
           icon: 'mdi-account-supervisor',
           title: 'Utilisateurs',
-          to: '/root/users'
+          onClick: () => this.$router.push('/root/users')
+        },
+        {
+          icon: 'mdi-logout',
+          title: 'Déconnexion',
+          onClick: () => {
+            this.$auth.logout().then(() => this.$router.go(0))
+          }
         }
       ],
       miniVariant: false,

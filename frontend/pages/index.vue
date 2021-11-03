@@ -15,6 +15,7 @@ export default {
   components: {DocumentTable, DocumentUpload},
   async asyncData({$axios, store}){
     const documents = await $axios.$get("/api/documents/me")
+    console.log(documents)
     if (documents) {
       store.dispatch('document/setDocuments',documents)
     }

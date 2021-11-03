@@ -29,6 +29,7 @@
         <v-btn
             elevation="2"
             icon
+            @click="download(item.uuid)"
         >
             <v-icon dark>
                 mdi-download
@@ -114,6 +115,10 @@ export default {
             const color = colors.pop()
             colors.unshift(color)
             return color
+        },
+        async download(uuid){
+            const signedUrl = await this.$axios.$get(`/api/documents/download/${uuid}`)
+            window.open(signedUrl, '_blank').focus();
         }
     }
 }

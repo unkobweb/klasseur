@@ -30,7 +30,7 @@ export default class ObjectStoragesController {
 
     async download(userUuid, filename){
         return new Promise((resolve, reject) => {
-            s3.getObject({
+            s3.getSignedUrl('getObject',{
                 Bucket: Env.get("S3_BUCKET"),
                 Key: `${userUuid}/${filename}`
             }, (err, data) => {
