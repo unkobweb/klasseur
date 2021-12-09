@@ -1,38 +1,30 @@
 <template>
-  <v-app>
-    <UserMenu/>
-    <v-main>
-      <Nuxt/>
-    </v-main>
-  </v-app>
+  <div class="container">
+    <CThemeProvider>
+      <CColorModeProvider>
+        <CBox font-family="body" as="main">
+          <CReset />
+          <Nuxt />
+        </CBox>
+      </CColorModeProvider>
+    </CThemeProvider>
+  </div>
 </template>
-
-<style>
-html {
-  font-size: 21px;
-}
-.v-application--wrap{
-  display: flex;
-  flex-direction: row;
-}
-</style>
-
 <script>
-import UserMenu from '~/components/menus/UserMenu'
+import {
+  CThemeProvider,
+  CColorModeProvider,
+  CReset,
+  CBox
+} from '@chakra-ui/vue'
 
 export default {
-  middleware: ['auth','isNotRoot'],
-  components: {UserMenu},
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Klasseur'
-    }
+  name: 'App',
+  components: {
+    CThemeProvider,
+    CColorModeProvider,
+    CReset,
+    CBox
   }
 }
 </script>
