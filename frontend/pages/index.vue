@@ -1,168 +1,110 @@
 <template>
-  <div class="container">
-    <CBox
-      v-bind="mainStyles[colorMode]"
-      d="flex"
-      w="100vw"
-      h="100vh"
-      flex-dir="column"
-      justify-content="center"
-    >
-      <CHeading text-align="center" mb="4">
-        ⚡️ Hello chakra-ui/vue
-      </CHeading>
-      <CFlex justify="center" direction="column" align="center">
-        <CBox mb="3">
-          <CIconButton
-            mr="3"
-            :icon="colorMode === 'light' ? 'moon' : 'sun'"
-            :aria-label="`Switch to ${
-              colorMode === 'light' ? 'dark' : 'light'
-            } mode`"
-            @click="toggleColorMode"
-          />
-          <CButton
-            left-icon="info"
-            variant-color="blue"
-            @click="showToast"
-          >
-            Show Toast
-          </CButton>
-        </CBox>
-        <CAvatarGroup>
-          <CAvatar
-            name="Evan You"
-            alt="Evan You"
-            src="https://pbs.twimg.com/profile_images/1206997998900850688/cTXTQiHm_400x400.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar
-            name="Jonathan Bakebwa"
-            alt="Jonathan Bakebwa"
-            src="https://res.cloudinary.com/xtellar/image/upload/v1572857445/me_zqos4e.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar
-            name="Segun Adebayo"
-            alt="Segun Adebayo"
-            src="https://pbs.twimg.com/profile_images/1169353373012897802/skPUWd6e_400x400.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar src="pop">
-            <CAvatarBadge size="1.0em" border-color="papayawhip" bg="tomato" />
-          </CAvatar>
-        </CAvatarGroup>
-        <CButton
-          left-icon="close"
-          variant-color="red"
-          mt="3"
-          @click="showModal = true"
+    <div class="container">
+        <CBox
+            d="flex"
+            w="100vw"
+            h="100vh"
+            flex-dir="column"
+            justify-content="center"
+            align-items="center"
         >
-          Delete Account
-        </CButton>
-        <CModal :is-open="showModal">
-          <CModalOverlay />
-          <CModalContent>
-            <CModalHeader>Are you sure?</CModalHeader>
-            <CModalBody>Deleting user cannot be undone</CModalBody>
-            <CModalFooter>
-              <CButton @click="showModal = false">
-                Cancel
-              </CButton>
-              <CButton
-                margin-left="3"
-                variant-color="red"
-                @click="showModal = false"
-              >
-                Delete User
-              </CButton>
-            </CModalFooter>
-            <CModalCloseButton @click="showModal = false" />
-          </CModalContent>
-        </CModal>
-      </CFlex>
-    </CBox>
-  </div>
+            <CBox
+                d="flex"
+                max-w="600px"
+                flex-dir="column"
+                justify-content="center"
+                align-items="center"
+                mb="200px"
+            >
+                <CHeading mb="10">Klasseur</CHeading>
+                <CFormControl mb="5">
+                    <CFormLabel mb="1">Adresse email</CFormLabel>
+                    <CInput
+                        type="email"
+                        v-model="login.email"
+                        min-width="400px"
+                    />
+                </CFormControl>
+                <CFormControl mb="5">
+                    <CFormLabel mb="1">Mot de passe</CFormLabel>
+                    <CInput
+                        type="password"
+                        v-model="login.password"
+                        min-width="400px"
+                    />
+                </CFormControl>
+                <CStack direction='row' d="flex" w="100%" justify-content='space-between' align='center'>
+                    <CButton variant-color="blue" variant='solid' rightIcon="arrow-forward" @click="loginUser">
+                        Se connecter
+                    </CButton>
+                    <NuxtLink to="/forgot-password">
+                        <CButton variant-color="blue" variant='link'>
+                            Mot de passe oublié
+                        </CButton>
+                    </NuxtLink>
+                </CStack>
+            </CBox>
+        </CBox>
+    </div>
 </template>
 
-<script lang="js">
+<script>
 import {
-  CBox,
-  CButton,
-  CAvatarGroup,
-  CAvatar,
-  CAvatarBadge,
-  CModal,
-  CModalContent,
-  CModalOverlay,
-  CModalHeader,
-  CModalFooter,
-  CModalBody,
-  CModalCloseButton,
-  CIconButton,
-  CFlex,
-  CHeading
+    CBox,
+    CHeading,
+    CFormControl,
+    CFormLabel,
+    CInput,
+    CButton,
+    CStack
 } from '@chakra-ui/vue'
 
+import {
+    ArrowForwardIcon
+} from '@chakra-ui/icons'
+
 export default {
-  name: 'App',
-  components: {
-    CBox,
-    CButton,
-    CAvatarGroup,
-    CAvatar,
-    CAvatarBadge,
-    CModal,
-    CModalContent,
-    CModalOverlay,
-    CModalHeader,
-    CModalFooter,
-    CModalBody,
-    CModalCloseButton,
-    CIconButton,
-    CFlex,
-    CHeading
-  },
-  inject: ['$chakraColorMode', '$toggleColorMode'],
-  data () {
-    return {
-      showModal: false,
-      mainStyles: {
-        dark: {
-          bg: 'gray.700',
-          color: 'whiteAlpha.900'
-        },
-        light: {
-          bg: 'white',
-          color: 'gray.900'
+    data(){
+        return {
+            login: {
+                email: '',
+                password: ''
+            }
         }
-      }
-    }
-  },
-  computed: {
-    colorMode () {
-      return this.$chakraColorMode()
     },
-    theme () {
-      return this.$chakraTheme()
+    components: {
+        CBox,
+        CHeading,
+        CFormControl,
+        CFormLabel,
+        CInput,
+        CButton,
+        CStack,
+        ArrowForwardIcon
     },
-    toggleColorMode () {
-      return this.$toggleColorMode
+    methods: {
+        loginUser(){
+            console.log(this.login)
+            this.$axios.post('http://localhost:3333/api/login', this.login)
+                .then(res => {
+                    this.$toast({
+                        title: 'Connexion réussie',
+                        description: 'Vous êtes maintenant connecté',
+                        status: 'success',
+                        position: 'top-right',
+                        duration: 4000
+                    })
+                })
+                .catch(err => {
+                    this.$toast({
+                        title: 'Connexion impossible',
+                        description: "La combinaison adresse mail/mot de passe n'est pas correcte",
+                        status: 'error',
+                        position: 'top-right',
+                        duration: 4000
+                    })
+                })
+        }
     }
-  },
-  methods: {
-    showToast () {
-      this.$toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 10000,
-        isClosable: true
-      })
-    }
-  }
 }
 </script>

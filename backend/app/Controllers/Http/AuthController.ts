@@ -3,9 +3,9 @@ import LoginValidator from 'App/Validators/LoginValidator';
 
 export default class AuthController {
     async login({auth, request, response}: HttpContextContract) {
-        const {username, password} = await request.validate(LoginValidator);
+        const {email, password} = await request.validate(LoginValidator);
         try {
-            const token = await auth.use('api').attempt(username, password);
+            const token = await auth.use('api').attempt(email, password);
             return token;
         } catch (error) {
             return response.badRequest('Invalid credentials');

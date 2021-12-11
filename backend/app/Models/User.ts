@@ -11,10 +11,13 @@ export default class User extends BaseModel {
   public uuid: string
 
   @column()
-  public username: string;
+  public email: string;
 
   @column({serializeAs: null})
   public password: string;
+
+  @column()
+  public isAdmin: boolean;
 
   @column()
   public needChangePassword: boolean;

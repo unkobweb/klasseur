@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <CThemeProvider>
-      <CColorModeProvider>
+      <CColorModeProvider value="dark">
         <CBox font-family="body" as="main">
           <CReset />
           <Nuxt />
@@ -25,6 +25,6 @@ export default {
     CColorModeProvider,
     CReset,
     CBox
-  }
+  },
 }
 </script>

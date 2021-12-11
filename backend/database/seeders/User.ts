@@ -9,32 +9,10 @@ export default class UserSeeder extends BaseSeeder {
     const allUsers = await User.all()
 
     if (allUsers.length == 0) {
-
-      const user = await User.create({
-        username: "root",
-        password: "root"
-      })
-
-      const document = await Document.create({
-        filename: "myfilename",
-        size: 1024,
-        user_uuid: user.uuid
-      })
-
-      await Tag.createMany([
-        {
-          value: "Ordinateur",
-          document_uuid: document.uuid
-        },
-        {
-          value: "Facture",
-          document_uuid: document.uuid
-        },
-        {
-          value: "Juin",
-          document_uuid: document.uuid
-        }
-      ])
+      const user = new User()
+      user.email = "sieg.alexandre@gmail.com"
+      user.password = "123456"
+      await user.save()
     }
   }
 }
