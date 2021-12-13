@@ -8,10 +8,11 @@
                 <CModalBody>
                     <div class="dropzone-container">
                         <div class="dropzone">
-                            <CIcon name="arrow-up" size="42px"/>
-                            <p>Cliquez ou glissez un fichier</p>
-                            <input type="file" @change="previewFiles">
+                            <CIcon :name="fileName ? 'check' : 'arrow-up'" size="42px"/>
+                            <p>{{ fileName || "Cliquez pour ajouter un fichier" }}</p>
+                            <input ref="fileInput" type="file" @change="previewFiles">
                         </div>
+                        <p v-if="fileName" @click="deleteFile" class="delete-file-btn"><CIcon name="close" aria-label="Delete file"/><span>Supprimer le fichier</span></p>
                     </div>
                 </CModalBody>
                 <CModalFooter>
@@ -35,7 +36,11 @@
 .dropzone-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 40px;
 }
 .dropzone {
     position: relative;
@@ -49,8 +54,7 @@
     background-color: #384252;
     text-align: center;
     border-radius: 5px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 .dropzone [type="file"] {
   cursor: pointer;
@@ -62,6 +66,15 @@
   right: 0;
   bottom: 0;
   left: 0;
+}
+.delete-file-btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+.delete-file-btn span{
+    margin-left: 10px;
 }
 </style>
 
@@ -102,6 +115,11 @@ export default {
             canGoNext: false,
         }
     },
+    computed: {
+        fileName() {
+            return this.$store.getters['upload/getState'].file ? this.$store.getters['upload/getState'].file.name : "";
+        },
+    },
     methods: {
         closeModal() {
             this.openModal = false;
@@ -118,7 +136,12 @@ export default {
                 this.$store.dispatch('upload/setFile', null)
                 this.canGoNext = false;
             }
-        }
+        },
+        deleteFile() {
+            this.$store.dispatch('upload/setFile', null);
+            this.$refs.fileInput.value = '';
+            this.canGoNext = false;
+        },
     },
 }
 </script>
