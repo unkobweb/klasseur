@@ -4,20 +4,32 @@ export const state = () => ({
 });
 
 export const mutations = {
+  setFile(state, data) {
+    state.file = data
+  },
   setTags(state, data) {
     state.tags = data
   },
-  setFile(state, data) {
-    state.file = data
+  addTag(state, data) {
+    state.tags.push(data)
+  },
+  removeTag(state, data) {
+    state.tags = state.tags.filter(tag => tag !== data)
   }
 };
 
 export const actions = {
+  setFile({commit}, data) {
+    commit("setFile", data)
+  },
   setTags({commit}, data) {
     commit("setTags", data)
   },
-  setFile({commit}, data) {
-    commit("setFile", data)
+  addTag({commit}, data) {
+    commit("addTag", data)
+  },
+  removeTag({commit}, data) {
+    commit("removeTag", data)
   }
 };
 

@@ -40,6 +40,12 @@ export default {
     '@nuxtjs/auth-next',
   ],
 
+  chakra: {
+    config: {
+      autoImport: true
+    }
+  },
+
   auth: {
     strategies: {
       local: {

@@ -5,22 +5,9 @@
             <CModalContent>
                 <CModalHeader>Héberger un document</CModalHeader>
                 <CModalCloseButton/>
-                <CModalBody>
-                    <div class="dropzone-container">
-                        <div class="dropzone">
-                            <CIcon :name="fileName ? 'check' : 'arrow-up'" size="42px"/>
-                            <p>{{ fileName || "Cliquez pour ajouter un fichier" }}</p>
-                            <input ref="fileInput" type="file" @change="previewFiles">
-                        </div>
-                        <p v-if="fileName" @click="deleteFile" class="delete-file-btn"><CIcon name="close" aria-label="Delete file"/><span>Supprimer le fichier</span></p>
-                    </div>
-                </CModalBody>
-                <CModalFooter>
-                    <CButtonGroup :spacing="2">
-                        <CButton @click="step--" :isDisabled="!step" variant='solid'>Précédent</CButton>
-                        <CButton @click="step++" :isDisabled="!canGoNext" variant-color="blue" variant='solid'>Suivant</CButton>
-                    </CButtonGroup>
-                </CModalFooter>
+                <Dropzone v-if="step === 0" @goNext="goNext"/>
+                <TagsSelector v-if="step === 1" @goNext="goNext" @goPrevious="goPrevious"/>
+                <SendFile v-if="step === 2" @goPrevious="goPrevious" @closeModal="closeModal" />
             </CModalContent>
             <CModalOverlay/>
         </CModal>
@@ -53,7 +40,7 @@
     justify-content: center;
     background-color: #384252;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
 .dropzone [type="file"] {
@@ -76,49 +63,28 @@
 .delete-file-btn span{
     margin-left: 10px;
 }
+.purposed-tag {
+    cursor: pointer;
+}
 </style>
 
 <script>
-import {
-    CIconButton,
-    CModal,
-    CModalOverlay,
-    CModalContent,
-    CModalHeader,
-    CModalFooter,
-    CModalBody,
-    CModalCloseButton,
-    CButton,
-    CButtonGroup,
-    CIcon
-} from '@chakra-ui/vue'
+import Dropzone from '@/components/upload/Dropzone.vue';
+import TagsSelector from '@/components/upload/TagsSelector.vue';
+import SendFile from '@/components/upload/SendFile.vue';
 
 export default {
     name: 'UploadFile',
-    components: {
-        CIconButton,
-        CModal,
-        CModalOverlay,
-        CModalContent,
-        CModalHeader,
-        CModalFooter,
-        CModalBody,
-        CModalCloseButton,
-        CButton,
-        CButtonGroup,
-        CIcon
-    },
     data() {
         return {
             openModal: false,
             step: 0,
-            canGoNext: false,
         }
     },
-    computed: {
-        fileName() {
-            return this.$store.getters['upload/getState'].file ? this.$store.getters['upload/getState'].file.name : "";
-        },
+    components: {
+        Dropzone,
+        TagsSelector,
+        SendFile
     },
     methods: {
         closeModal() {
@@ -127,21 +93,12 @@ export default {
             this.$store.dispatch('upload/setFile', null);
             this.$store.dispatch('upload/setTags', []);
         },
-        previewFiles(e) {
-            console.log(e.target.files[0]);
-            if (e.target.files && e.target.files[0]) {
-                this.$store.dispatch('upload/setFile', e.target.files[0])
-                this.canGoNext = true;
-            } else {
-                this.$store.dispatch('upload/setFile', null)
-                this.canGoNext = false;
-            }
+        goPrevious() {
+            this.step--;
         },
-        deleteFile() {
-            this.$store.dispatch('upload/setFile', null);
-            this.$refs.fileInput.value = '';
-            this.canGoNext = false;
-        },
-    },
+        goNext() {
+            this.step++;
+        }
+    }
 }
 </script>
