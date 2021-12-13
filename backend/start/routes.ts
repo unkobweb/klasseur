@@ -22,11 +22,11 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
 
-  Route.post('/login', "AuthController.login")
+  Route.post('/auth/login', "AuthController.login")
   Route.group(() => {
 
-    Route.get('/authenticate',"AuthController.authenticate")
-    Route.get('/logout',"AuthController.logout")
+    Route.get('/auth/user',"AuthController.authenticate")
+    Route.get('/auth/logout',"AuthController.logout")
 
     Route.group(() => {
       Route.post('/',"UsersController.create").middleware('isRoot');

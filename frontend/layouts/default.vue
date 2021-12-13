@@ -2,7 +2,7 @@
   <div class="container">
     <CThemeProvider>
       <CColorModeProvider value="dark">
-        <CBox font-family="body" as="main">
+        <CBox v-bind="darkColor" w="100vw" h="100vh" font-family="body" as="main">
           <CReset />
           <Nuxt />
         </CBox>
@@ -10,6 +10,16 @@
     </CThemeProvider>
   </div>
 </template>
+
+<style>
+html, body {
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
 <script>
 import {
   CThemeProvider,
@@ -26,5 +36,13 @@ export default {
     CReset,
     CBox
   },
+  data() {
+    return {
+      darkColor: {
+          bg: 'gray.700',
+          color: 'whiteAlpha.900'
+      }
+    }
+  }
 }
 </script>
