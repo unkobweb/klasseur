@@ -59,10 +59,6 @@ import {
     CStack
 } from '@chakra-ui/vue'
 
-import {
-    ArrowForwardIcon
-} from '@chakra-ui/icons'
-
 export default {
     data(){
         return {
@@ -80,8 +76,7 @@ export default {
         CFormLabel,
         CInput,
         CButton,
-        CStack,
-        ArrowForwardIcon
+        CStack
     },
     methods: {
         async loginUser(){
