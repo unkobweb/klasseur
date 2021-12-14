@@ -1,11 +1,12 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Document from 'App/Models/Document'
 import CreateDocumentValidator from 'App/Validators/CreateDocumentValidator'
-import ObjectStoragesController from './ObjectStoragesController'
+import Drive from '@ioc:Adonis/Core/Drive'
+import Env from '@ioc:Adonis/Core/Env'
 import fs from 'fs'
 import Tag from 'App/Models/Tag'
 
-const s3 = new ObjectStoragesController()
+const drive = Drive.use(Env.get('DRIVE_DRIVER', 'local'))
 
 export default class DocumentsController {
     async me({auth, response}: HttpContextContract){
@@ -40,8 +41,8 @@ export default class DocumentsController {
 
         await document.load('tags')
 
-        s3.upload(user.uuid, Buffer.from(fs.readFileSync(payload.file.tmpPath)), payload.file.clientName)
-        
+        const uploaded = await drive.put(`/${user.uuid}/${document.uuid}`, Buffer.from(fs.readFileSync(payload.file.tmpPath)))
+        console.log(uploaded)
         response.send(document)
     }
 
@@ -56,8 +57,8 @@ export default class DocumentsController {
             return response.notFound("Document not found")
         }
 
-        const signedUrl = await s3.download(user.uuid, document.filename)
+        //const signedUrl = await s3.download(user.uuid, document.filename)
 
-        response.send(signedUrl)
+        response.send("signedUrl")
     }
 }
