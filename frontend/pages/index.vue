@@ -4,6 +4,7 @@
         <h1>Bonjour</h1>
         <p>{{$auth.user}}</p>
         <button @click="logout">Logout</button>
+        <FilesTable />
         <UploadFile />
     </div>
 </template>
@@ -11,13 +12,14 @@
 <script>
 import { CHeading } from '@chakra-ui/vue'
 import UploadFile from '@/components/UploadFile'
-
+import FileTable from '@/components/FilesTable'
 
 export default {
     middleware: 'auth',
     components: {
         CHeading,
-        UploadFile
+        UploadFile,
+        FileTable
     },
     methods: {
         logout() {
