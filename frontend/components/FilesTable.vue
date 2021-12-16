@@ -7,11 +7,11 @@
                     <th>Nom</th>
                     <th>Taille</th>
                     <th>Tags</th>
-                    <th>Actions</th>
+                    <th class="action-buttons">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="file in files" :key="file.uuid">
+                <tr class="file-line" v-for="file in files" :key="file.uuid">
                     <td>{{ file.filename }}</td>
                     <td>{{ convertOctets(file.size) }}</td>
                     <td>
@@ -19,9 +19,11 @@
                             <CTag cursor="default" size="sm" v-for="tag in file.tags" :key="tag.uuid" mb="1" mt="1">{{ tag.value }}</CTag>
                         </CStack>
                     </td>
-                    <td>
-                        <CButton variant='solid' size="sm">Télécharger</CButton>
-                        <CButton variant='solid' size="sm">Supprimer</CButton>
+                    <td class="action-buttons">
+                        <CStack :spacing="2" is-inline>
+                            <CButton variant='solid' size="sm" rightIcon="pencil-alt" @click="openFileOptions(file)">Modifier</CButton>
+                            <CButton variant='solid' variant-color="blue" size="sm" rightIcon="file-download" >Télécharger</CButton>
+                        </CStack>
                     </td>
                 </tr>
             </tbody>
@@ -48,16 +50,23 @@
 
 <style>
 .files-table {
-    width: 95%;
+    width: 100%;
     border-collapse: collapse;
     margin: auto;
     margin-top: 20px;
+}
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
 }
 .size {
     font-size: 12px;
 }
 th {
     text-align: left;
+}
+td {
+    padding: 7px 0;
 }
 @media screen and (max-width: 768px) {
     .desktop {

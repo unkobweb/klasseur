@@ -16,7 +16,12 @@
 
 <style>
 #modal-upload {
-    max-width: 93vw;
+    max-width: 450px;
+}
+@media screen and (max-width: 500px) {
+    #modal-upload {
+        max-width: 93vw;
+    }
 }
 #upload-btn {
     position: absolute;

@@ -1,4 +1,4 @@
-import { faTrash, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
+import { faTrash,faPencilAlt, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -52,7 +52,8 @@ export default {
         faTrash,
         faHamburger,
         faFileDownload,
-        faFolderOpen
+        faFolderOpen,
+        faPencilAlt
       }
     }
   },

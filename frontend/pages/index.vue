@@ -10,6 +10,8 @@
 <style>
 .index-container {
     padding: 20px;
+    max-width: 1300px;
+    margin: auto;
 }
 </style>
 

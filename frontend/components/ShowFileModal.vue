@@ -33,7 +33,12 @@
 
 <style>
 #modal-file {
-    max-width: 93vw;
+    max-width: 400px;
+}
+@media screen and (max-width: 500px) {
+    #modal-file {
+        max-width: 93vw;
+    }
 }
 </style>
 
