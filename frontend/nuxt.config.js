@@ -1,3 +1,5 @@
+import { faGlobeAfrica, faEnvelope, faHamburger } from '@fortawesome/free-solid-svg-icons'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -43,6 +45,14 @@ export default {
   chakra: {
     config: {
       autoImport: true
+    },
+    icons: {
+      iconPack: 'fa',
+      iconSet: {
+        faGlobeAfrica, 
+        faEnvelope,
+        faHamburger
+      }
     }
   },
 

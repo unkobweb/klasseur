@@ -60,6 +60,7 @@ import {
 } from '@chakra-ui/vue'
 
 export default {
+    layout: "login",
     data(){
         return {
             loading: false,

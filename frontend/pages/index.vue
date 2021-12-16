@@ -1,7 +1,7 @@
 <template>
     <div class="index-container">
+        <CHeading as="h1" size="md" text-align="center" mb="5">Klasseur</CHeading>
         <TagsInput />
-        <button @click="logout">Logout</button>
         <FilesTable />
         <UploadFile />
     </div>
@@ -27,10 +27,10 @@ export default {
         FileTable,
         TagsInput
     },
-    methods: {
-        logout() {
-            this.$auth.logout()
-        }
+    async asyncData({$axios, store}) {
+        await $axios.$get('/api/documents/me').then(response => {
+            store.dispatch('files/setFiles', response);
+        });
     }
 }
 </script>

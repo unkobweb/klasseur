@@ -41,15 +41,10 @@ th {
 <script>
 export default {
     name: 'FilesTable',
-    data() {
-        return {
-            files: [],
+    computed: {
+        files() {
+            return this.$store.getters['files/getFiles'];
         }
-    },
-    fetch() {
-        this.$axios.$get('/api/documents/me').then(response => {
-            this.files = response;
-        });
     },
     methods: {
         convertOctets(octets) {

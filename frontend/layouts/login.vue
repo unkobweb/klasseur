@@ -3,7 +3,6 @@
     <CThemeProvider>
       <CColorModeProvider value="dark">
         <CBox v-bind="darkColor" w="100vw" h="100vh" font-family="body" as="main">
-          <Menu />
           <CReset />
           <Nuxt />
         </CBox>
@@ -28,7 +27,6 @@ import {
   CReset,
   CBox
 } from '@chakra-ui/vue'
-import Menu from '@/components/Menu'
 
 export default {
   name: 'App',
@@ -36,8 +34,7 @@ export default {
     CThemeProvider,
     CColorModeProvider,
     CReset,
-    CBox,
-    Menu
+    CBox
   },
   data() {
     return {
