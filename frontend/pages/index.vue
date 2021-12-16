@@ -1,25 +1,31 @@
 <template>
-    <div>
-        <CHeading>Bonjour</CHeading>
-        <h1>Bonjour</h1>
-        <p>{{$auth.user}}</p>
+    <div class="index-container">
+        <TagsInput />
         <button @click="logout">Logout</button>
         <FilesTable />
         <UploadFile />
     </div>
 </template>
 
+<style>
+.index-container {
+    padding: 20px;
+}
+</style>
+
 <script>
 import { CHeading } from '@chakra-ui/vue'
 import UploadFile from '@/components/UploadFile'
 import FileTable from '@/components/FilesTable'
+import TagsInput from '@/components/TagsInput'
 
 export default {
     middleware: 'auth',
     components: {
         CHeading,
         UploadFile,
-        FileTable
+        FileTable,
+        TagsInput
     },
     methods: {
         logout() {
