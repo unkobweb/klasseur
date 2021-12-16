@@ -81,11 +81,9 @@ export default {
     },
     methods: {
         async loginUser(){
-            console.log(this.login)
             this.loading = true
             try {
                 let response = await this.$auth.loginWith('local', { data: this.login })
-                console.log(response)
                 this.$toast({
                     title: 'Connexion réussie',
                     description: "Vous êtes maintenant connecté",
@@ -95,7 +93,6 @@ export default {
                 })
                 this.$router.push('/')
             } catch (err) {
-                console.log(err)
                 this.$toast({
                     title: 'Connexion impossible',
                     description: "La combinaison adresse mail/mot de passe est incorrecte.",

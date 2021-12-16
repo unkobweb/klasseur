@@ -3,7 +3,7 @@
         <CBox class="tags-input-container" @click="clickOnInput">
             <CStack class="tags-stack" :spacing="0.5" align-items="start" flex-wrap="wrap" is-inline>
                 <CButton cursor="pointer" size="sm" v-for="tag in tags" :key="tag" left-icon="small-close" @click="deleteTag(tag)">{{tag}}</CButton>
-                <CInput ref="inputTag" class="tag-input" @keydown="handleInputChange" @keyup="cleanTag" v-model="tag"></CInput>
+                <CInput ref="inputTag" :class="`tag-input ${classinput}`" @keydown="handleInputChange" @keyup="cleanTag" v-model="tag"></CInput>
             </CStack>
         </CBox>
     </div>
@@ -42,10 +42,20 @@
 <script>
 export default {
     name: 'TagsInput',
+    props: ['defaultTags', 'classname'],
     data() {
         return {
             tag: "",
-            tags: []
+            tags: [],
+            classinput: "tag-input"
+        }
+    },
+    fetch() {
+        if (this.defaultTags) {
+            this.tags = this.defaultTags.map(tag => tag.value)
+        }
+        if (this.classname) {
+            this.classinput = this.classname
         }
     },
     methods: {
@@ -53,7 +63,6 @@ export default {
             this.tags.splice(this.tags.indexOf(tag), 1);
         },
         handleInputChange(e) {
-            console.log(e.keyCode)
             // if press delete and input is empty, remove last tag in tags
             if (e.keyCode === 8 && !this.tag) {
                 this.deleteTag(this.tags[this.tags.length - 1]);
@@ -74,8 +83,7 @@ export default {
         },
         clickOnInput() {
             // focus on input
-            document.querySelector('.tag-input').focus();
-            console.log(this.$refs.inputTag)
+            document.querySelector(`.${this.classinput}`).focus();
         }
     }
 }

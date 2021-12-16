@@ -54,6 +54,7 @@ const driveConfig: DriveConfig = {
       key: Env.get('S3_KEY'),
       secret: Env.get('S3_SECRET'),
       region: Env.get('S3_REGION'),
+      //@ts-ignore
       bucket: Env.get('S3_BUCKET'),
       endpoint: Env.get('S3_ENDPOINT'),
     },

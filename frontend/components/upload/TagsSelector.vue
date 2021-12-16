@@ -5,13 +5,13 @@
                 <div class="proposed-tags" v-if="!purposedTags.every(tag => tags.includes(tag))">
                     <CHeading as="h4" size="lg" mb="5">Tags proposés</CHeading>
                     <CStack :spacing="4" align-items="start" is-inline mb="5">
-                        <CButton cursor="pointer" v-for="tag in purposedTags.filter(tag => !tags.includes(tag))" :key="tag" left-icon="add" @click="addTag(tag)">{{tag}}</CButton>
+                        <CButton size="sm" cursor="pointer" v-for="tag in purposedTags.filter(tag => !tags.includes(tag))" :key="tag" left-icon="add" @click="addTag(tag)">{{tag}}</CButton>
                     </CStack>
                 </div>
                 <div class="tags">
                     <CHeading as="h4" size="lg" mb="5">Vos tags</CHeading>
                     <CStack :spacing="4" align-items="start" flex-wrap="wrap" is-inline>
-                        <CButton cursor="pointer" v-for="tag in tags" :key="tag" left-icon="close" mb="4" @click="removeTag(tag)">{{tag}}</CButton>
+                        <CButton cursor="pointer" size="sm" v-for="tag in tags" :key="tag" left-icon="close" mb="4" @click="removeTag(tag)">{{tag}}</CButton>
                         <p v-if="tags.length === 0" mb="4">Aucun tag</p>
                     </CStack>
                 </div>

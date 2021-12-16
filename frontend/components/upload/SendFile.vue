@@ -61,11 +61,12 @@ export default {
             const formData = new FormData();
             // add the file to the formdata
             formData.append('file', state.file);
-            // add the tags to the formdata
-            formData.append('tags', state.tags.join('|'));
+            // add the tags array to the formdata
+            for (let i = 0; i < state.tags.length; i++) {
+                formData.append('tags[]', state.tags[i]);
+            }
             // send it to the API
             this.$axios.$post('/api/documents/upload', formData).then(response => {
-                console.log(response);
                 this.$toast({
                     title: 'Fichier envoyé',
                     description: "Le fichier a bien été envoyé.",
@@ -75,7 +76,6 @@ export default {
                 })
                 this.$emit('closeModal');
             }).catch(error => {
-                console.log(error);
                 this.$toast({
                     title: 'Erreur lors de l\'envoi',
                     description: "Une erreur est survenue lors de l'envoi du fichier.",

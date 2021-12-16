@@ -43,7 +43,6 @@ export default {
             }
         },
         previewFiles(e) {
-            console.log(e.target.files[0]);
             if (e.target.files && e.target.files[0]) {
                 this.$store.dispatch('upload/setFile', e.target.files[0])
                 this.canGoNext = true;

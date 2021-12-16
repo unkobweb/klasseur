@@ -1,4 +1,4 @@
-import { faGlobeAfrica, faEnvelope, faHamburger } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -49,9 +49,10 @@ export default {
     icons: {
       iconPack: 'fa',
       iconSet: {
-        faGlobeAfrica, 
-        faEnvelope,
-        faHamburger
+        faTrash,
+        faHamburger,
+        faFileDownload,
+        faFolderOpen
       }
     }
   },

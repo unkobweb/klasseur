@@ -1,7 +1,7 @@
 <template>
     <div>
         <CIconButton icon="add" @click="openModal = true" aria-label="upload" size="lg" id="upload-btn"/>
-        <CModal :is-open="openModal" :on-close="closeModal">
+        <CModal id="upload" :is-open="openModal" :on-close="closeModal">
             <CModalContent>
                 <CModalHeader>Héberger un document</CModalHeader>
                 <CModalCloseButton/>
@@ -15,6 +15,9 @@
 </template>
 
 <style>
+#modal-upload {
+    max-width: 93vw;
+}
 #upload-btn {
     position: absolute;
     right: 20px;

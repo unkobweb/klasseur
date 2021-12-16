@@ -2,11 +2,8 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Document from 'App/Models/Document'
 import CreateDocumentValidator from 'App/Validators/CreateDocumentValidator'
 import Drive from '@ioc:Adonis/Core/Drive'
-import Env from '@ioc:Adonis/Core/Env'
 import fs from 'fs'
 import Tag from 'App/Models/Tag'
-
-const drive = Drive.use(Env.get('DRIVE_DRIVER', 'local'))
 
 export default class DocumentsController {
     async me({auth, response}: HttpContextContract){
@@ -32,7 +29,7 @@ export default class DocumentsController {
             user_uuid: user.uuid
         })
 
-        const tags = payload.tags.split("|")
+        const tags = payload.tags.map(tag => tag.toLowerCase())
 
         await Tag.createMany(tags.map(tag => ({
             value: tag,
@@ -41,8 +38,7 @@ export default class DocumentsController {
 
         await document.load('tags')
 
-        const uploaded = await drive.put(`/${user.uuid}/${document.uuid}`, Buffer.from(fs.readFileSync(payload.file.tmpPath)))
-        console.log(uploaded)
+        await Drive.put(`${user.uuid}/${document.filename}`, Buffer.from(fs.readFileSync(payload.file.tmpPath)))
         response.send(document)
     }
 
@@ -57,8 +53,10 @@ export default class DocumentsController {
             return response.notFound("Document not found")
         }
 
-        //const signedUrl = await s3.download(user.uuid, document.filename)
+        const url = await Drive.getSignedUrl(`${user.uuid}/${document.filename}`, {
+            expiresIn: '3mins'
+        })
 
-        response.send("signedUrl")
+        response.json({url})
     }
 }

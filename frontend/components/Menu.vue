@@ -51,20 +51,13 @@ export default {
     },
     mounted() {
         const files = this.$store.getters['files/getFiles']
-        console.log(files)
         // in files find the file with the biggest size
-        this.biggestFile = files.reduce((prev, current) => {
-            return prev.size > current.size ? prev : current
-        })
-        // find the file with the newest created_at date
-        this.newestFile = files.reduce((prev, current) => {
-            return prev.created_at > current.created_at ? prev : current
-        })
+        if (files.length > 0) {
+            this.biggestFile = files.reduce((a, b) => a.size > b.size ? a : b)
+            this.newestFile = files.reduce((a, b) => a.created_at > b.created_at ? a : b)
+            this.totalSize = files.reduce((a, b) => a.size + b.size)
+        }
         this.numberOfFiles = files.length
-        // calc size of all files
-        this.totalSize = files.reduce((prev, current) => {
-            return prev + current.size
-        }, 0)
     },
     methods: {
         close() {
