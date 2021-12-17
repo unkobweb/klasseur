@@ -9,12 +9,6 @@ export const mutations = {
   },
   setTags(state, data) {
     state.tags = data
-  },
-  addTag(state, data) {
-    state.tags.push(data)
-  },
-  removeTag(state, data) {
-    state.tags = state.tags.filter(tag => tag !== data)
   }
 };
 
@@ -23,13 +17,8 @@ export const actions = {
     commit("setFile", data)
   },
   setTags({commit}, data) {
+    console.log("IN STORE",data)
     commit("setTags", data)
-  },
-  addTag({commit}, data) {
-    commit("addTag", data)
-  },
-  removeTag({commit}, data) {
-    commit("removeTag", data)
   }
 };
 

@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div class="proposed-tags" v-if="purposedTags && !purposedTags.every(tag => tags.includes(tag))">
+            <CHeading as="h4" size="lg" mb="5">Tags proposés</CHeading>
+            <CStack :spacing="4" align-items="start" is-inline mb="5">
+                <CButton size="sm" cursor="pointer" v-for="tag in purposedTags.filter(tag => !tags.includes(tag))" :key="tag" left-icon="add" @click="addTag(tag)">{{tag}}</CButton>
+            </CStack>
+        </div>
+        <CHeading v-if="title" as="h4" size="lg" mb="5">{{ title }}</CHeading>
         <CBox class="tags-input-container" @click="clickOnInput">
             <CStack class="tags-stack" :spacing="0.5" align-items="start" flex-wrap="wrap" is-inline>
                 <CButton cursor="pointer" size="sm" v-for="tag in tags" :key="tag" left-icon="small-close" @click="deleteTag(tag)">{{tag}}</CButton>
@@ -42,7 +49,7 @@
 <script>
 export default {
     name: 'TagsInput',
-    props: ['defaultTags', 'classname'],
+    props: ['defaultTags', 'title', 'purposedTags', 'classname'],
     data() {
         return {
             tag: "",
@@ -59,8 +66,14 @@ export default {
         }
     },
     methods: {
+        addTag(tag) {
+            this.tags.push(tag)
+            console.log("WILL EMIT", this.tags)
+            this.$emit("updateTags", this.tags);
+        },
         deleteTag(tag) {
             this.tags.splice(this.tags.indexOf(tag), 1);
+            this.$emit("updateTags", this.tags);
         },
         handleInputChange(e) {
             // if press delete and input is empty, remove last tag in tags
@@ -71,7 +84,8 @@ export default {
             if (e.keyCode === 13 || e.keyCode === 32) {
                 if (/^[a-zA-Z0-9-]+$/.test(this.tag)) {
                     if (!this.tags.includes(this.tag)) {
-                        this.tags.push(this.tag.toLowerCase());
+                        console.log("WILL ADD TAG",this.tag)
+                        this.addTag(this.tag.toLowerCase());
                         this.tag = "";
                     }
                 }

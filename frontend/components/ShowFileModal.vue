@@ -1,34 +1,37 @@
 <template>
-    <CModal id="file" is-open :on-close="closeModal">
-        <CModalContent>
-            <CModalHeader>Informations</CModalHeader>
-            <CModalCloseButton/>
-            <CModalBody mb="30px">
-                <CBox mb="15px">
-                    <CHeading as="h5" size="sm">Nom</CHeading>
-                    <p>{{file.filename}}</p>
-                </CBox>
-                <CBox mb="15px">
-                    <CHeading as="h5" size="sm">Taille</CHeading>
-                    <p>{{convertOctets(file.size)}}</p>
-                </CBox>
-                <CBox>
-                    <CHeading as="h5" size="sm">Tags</CHeading>
-                    <!-- <TagsInput :defaultTags="file.tags" classname="info-tags-input"/> -->
-                    <CStack :spacing="2" align-items="start" flex-wrap="wrap" is-inline>
-                        <CTag cursor="default" size="sm" v-for="tag in file.tags" :key="tag.uuid" mb="1" mt="1">{{ tag.value }}</CTag>
-                    </CStack>
-                </CBox>
-            </CModalBody>
-            <CModalFooter>
-                <CButtonGroup :spacing="2">
-                    <CButton @click="downloadFile" size="sm" variant-color="blue" rightIcon="file-download" variant='solid'>Télécharger</CButton>
-                    <CButton @click="deleteFile" size="sm" variant-color="red" rightIcon="trash" variant='solid'>Supprimer</CButton>
-                </CButtonGroup>
-            </CModalFooter>
-        </CModalContent>
-        <CModalOverlay/>
-    </CModal>
+    <div>
+        <CModal id="file" is-open :on-close="closeModal">
+            <CModalContent>
+                <CModalHeader>Informations</CModalHeader>
+                <CModalCloseButton/>
+                <CModalBody mb="30px">
+                    <CBox mb="15px">
+                        <CHeading as="h5" size="sm">Nom</CHeading>
+                        <p>{{file.filename}}</p>
+                    </CBox>
+                    <CBox mb="15px">
+                        <CHeading as="h5" size="sm">Taille</CHeading>
+                        <p>{{convertOctets(file.size)}}</p>
+                    </CBox>
+                    <CBox>
+                        <CHeading as="h5" size="sm">Tags</CHeading>
+                        <!-- <TagsInput :defaultTags="file.tags" classname="info-tags-input"/> -->
+                        <CStack :spacing="2" align-items="start" flex-wrap="wrap" is-inline>
+                            <CTag cursor="default" size="sm" v-for="tag in file.tags" :key="tag.uuid" mb="1" mt="1">{{ tag.value }}</CTag>
+                        </CStack>
+                    </CBox>
+                </CModalBody>
+                <CModalFooter>
+                    <CButtonGroup :spacing="2">
+                        <CButton @click="downloadFile" size="sm" variant-color="blue" rightIcon="file-download" variant='solid'>Télécharger</CButton>
+                        <CButton @click="deleteFile" size="sm" variant-color="red" rightIcon="trash" variant='solid'>Supprimer</CButton>
+                    </CButtonGroup>
+                </CModalFooter>
+            </CModalContent>
+            <CModalOverlay/>
+        </CModal>
+        <ConfirmDelete v-if="promptDelete" @cancel="hideDeletePrompt" @confirm="confirmDeleteFile" />
+    </div>
 </template>
 
 <style>
@@ -44,11 +47,18 @@
 
 <script>
 import TagsInput from '@/components/TagsInput'
+import ConfirmDelete from '@/components/ConfirmDelete'
 
 export default {
     name: "ShowFileModal",
     components: {
-        TagsInput
+        TagsInput,
+        ConfirmDelete
+    },
+    data() {
+        return {
+            promptDelete: false
+        }
     },
     computed: {
         file() {
@@ -79,7 +89,18 @@ export default {
                 })
         },
         deleteFile() {
-
+            this.promptDelete = true
+        },
+        hideDeletePrompt() {
+            this.promptDelete = false
+        },
+        confirmDeleteFile() {
+            this.promptDelete = false
+            this.$axios.$delete(`/api/documents/${this.file.uuid}`)
+                .then(response => {
+                    this.$store.dispatch('files/removeFile', this.file)
+                    this.closeModal()
+                })
         }
     }
 }
