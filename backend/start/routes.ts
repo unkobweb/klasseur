@@ -37,6 +37,8 @@ Route.group(() => {
       Route.get('/me', "DocumentsController.me")
       Route.post('/upload', "DocumentsController.upload")
       Route.get('/download/:uuid', "DocumentsController.download")
+      Route.patch('/:uuid', "DocumentsController.update")
+      Route.delete('/:uuid', "DocumentsController.delete")
     }).prefix('/documents')
 
   }).middleware('auth');
