@@ -20,20 +20,20 @@
                 <CFormControl mb="5">
                     <CFormLabel mb="1">Adresse email</CFormLabel>
                     <CInput
+                        class="login-input"
                         type="email"
                         v-model="login.email"
-                        min-width="400px"
                     />
                 </CFormControl>
                 <CFormControl mb="5">
                     <CFormLabel mb="1">Mot de passe</CFormLabel>
                     <CInput
+                        class="login-input"
                         type="password"
                         v-model="login.password"
-                        min-width="400px"
                     />
                 </CFormControl>
-                <CStack direction='row' d="flex" w="100%" justify-content='space-between' align='center'>
+                <CStack class="login-buttons">
                     <CButton :is-loading="loading" variant-color="blue" variant='solid' rightIcon="arrow-forward" @click="loginUser">
                         Se connecter
                     </CButton>
@@ -47,6 +47,33 @@
         </CBox>
     </div>
 </template>
+
+<style>
+.login-input {
+    min-width: 400px;
+}
+.login-buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+@media screen and (max-width: 520px) {
+    .login-input {
+        min-width: 90vw;
+    }
+    
+}
+@media screen and (max-width: 360px) {
+    .login-buttons {
+        flex-direction: column;
+    }
+    .login-buttons button {
+        width: 100%;
+    }
+}
+</style>
 
 <script>
 import {

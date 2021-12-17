@@ -22,7 +22,7 @@
                     <td class="action-buttons">
                         <CStack :spacing="2" is-inline>
                             <CButton variant='solid' size="sm" rightIcon="pencil-alt" @click="openFileOptions(file)">Modifier</CButton>
-                            <CButton variant='solid' variant-color="blue" size="sm" rightIcon="file-download" >Télécharger</CButton>
+                            <CButton variant='solid' variant-color="blue" size="sm" rightIcon="file-download" @click="downloadFile(file)" >Télécharger</CButton>
                         </CStack>
                     </td>
                 </tr>
@@ -110,7 +110,15 @@ export default {
         },
         openFileOptions(file) {
             this.$store.dispatch('files/setSelectedFile', file);
-        }
+        },
+        downloadFile(file) {
+            this.$axios.$get(`/api/documents/download/${file.uuid}`)
+                .then(response => {
+                    console.log(response)
+                    // open response.url in a new tab
+                    window.open(response.url, '_blank');
+                })
+        },
     }
 }
 </script>

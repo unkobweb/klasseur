@@ -55,7 +55,7 @@ export default {
         if (files.length > 0) {
             this.biggestFile = files.reduce((a, b) => a.size > b.size ? a : b)
             this.newestFile = files.reduce((a, b) => a.created_at > b.created_at ? a : b)
-            this.totalSize = files.reduce((a, b) => a.size + b.size)
+            this.totalSize = files.length === 1 ? files[0].size : files.reduce((a, b) => a.size + b.size)
         }
         this.numberOfFiles = files.length
     },
