@@ -17,7 +17,6 @@ export const actions = {
     commit("setFile", data)
   },
   setTags({commit}, data) {
-    console.log("IN STORE",data)
     commit("setTags", data)
   }
 };
@@ -25,6 +24,9 @@ export const actions = {
 export const getters = {
   getState(state) {
     return state
+  },
+  getTags(state) {
+    return state.tags
   }
 };
   

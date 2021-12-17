@@ -15,10 +15,12 @@
                     </CBox>
                     <CBox>
                         <CHeading as="h5" size="sm">Tags</CHeading>
-                        <!-- <TagsInput :defaultTags="file.tags" classname="info-tags-input"/> -->
-                        <CStack :spacing="2" align-items="start" flex-wrap="wrap" is-inline>
+                        <TagsInput v-if="modifyTags" :defaultTags="file.tags" @updateTags="updateTags" classname="info-tags-input"/>
+                        <CStack v-else :spacing="2" align-items="start" flex-wrap="wrap" is-inline>
                             <CTag cursor="default" size="sm" v-for="tag in file.tags" :key="tag.uuid" mb="1" mt="1">{{ tag.value }}</CTag>
                         </CStack>
+                        <CButton mt="5px" w="100%" v-if="!modifyTags" variant="solid" size="sm" rightIcon="pencil-alt" @click="modifyTags = true">Modifier les tags</CButton>
+                        <CButton mt="5px" w="100%" v-else variant="solid" size="sm" rightIcon="check" variant-color="vue" @click="applyTagsChanges">Appliquer les modifications</CButton>
                     </CBox>
                 </CModalBody>
                 <CModalFooter>
@@ -57,7 +59,9 @@ export default {
     },
     data() {
         return {
-            promptDelete: false
+            promptDelete: false,
+            modifyTags: false,
+            newTags: []
         }
     },
     computed: {
@@ -101,6 +105,31 @@ export default {
                     this.$store.dispatch('files/removeFile', this.file)
                     this.closeModal()
                 })
+        },
+        updateTags(tags) {
+            this.newTags = tags
+        },
+        applyTagsChanges() {
+            // if newTags is empty, prompt user to add tags
+            if (this.newTags.length === 0) {
+                this.$toast({
+                    title: 'Ajoutez des tags',
+                    description: "Vous devez ajouter au moins un tag pour pouvoir appliquer les modifications.",
+                    position: "top-right",
+                    status: 'error',
+                    duration: 4000
+                })
+                return
+            }
+            this.modifyTags = false
+            const formData = new FormData()
+            for (let i = 0; i < this.newTags.length; i++) {
+                formData.append('tags[]', this.newTags[i]);
+            }
+            this.$axios.$patch(`/api/documents/${this.file.uuid}`, formData)
+            .then(response => {
+                this.$store.dispatch('files/setTagsOfAFile', response)
+            })
         }
     }
 }

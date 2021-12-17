@@ -59,7 +59,11 @@ export default {
     },
     fetch() {
         if (this.defaultTags) {
-            this.tags = this.defaultTags.map(tag => tag.value)
+            if (typeof this.defaultTags[0] === "object") {
+                this.tags = this.defaultTags.map(tag => tag.value)
+            } else {
+                this.tags = this.defaultTags
+            }
         }
         if (this.classname) {
             this.classinput = this.classname
@@ -68,7 +72,6 @@ export default {
     methods: {
         addTag(tag) {
             this.tags.push(tag)
-            console.log("WILL EMIT", this.tags)
             this.$emit("updateTags", this.tags);
         },
         deleteTag(tag) {
@@ -84,7 +87,6 @@ export default {
             if (e.keyCode === 13 || e.keyCode === 32) {
                 if (/^[a-zA-Z0-9-]+$/.test(this.tag)) {
                     if (!this.tags.includes(this.tag)) {
-                        console.log("WILL ADD TAG",this.tag)
                         this.addTag(this.tag.toLowerCase());
                         this.tag = "";
                     }

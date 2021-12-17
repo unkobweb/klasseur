@@ -9,9 +9,9 @@
 
                 <c-drawer-body>
                     <c-heading as="h2" size="md" mb="30px">Statistiques</c-heading>
-                    <c-stat mb="10" v-if="numberOfFiles && newestFile">
+                    <c-stat mb="10" v-if="files.length > 0 && newestFile">
                         <c-stat-label>Nombre de documents</c-stat-label>
-                        <c-stat-number>{{numberOfFiles}}</c-stat-number>
+                        <c-stat-number>{{files.length}}</c-stat-number>
                         <c-stat-helper-text>Dernier ajout le {{formatDate(newestFile.created_at)}}</c-stat-helper-text>
                     </c-stat>
                     <c-stat v-if="totalSize && biggestFile">
@@ -42,22 +42,22 @@ export default {
     name: "Menu",
     data() {
         return {
-            isOpen: false,
-            numberOfFiles: null,
-            biggestFile: null,
-            newestFile: null,
-            totalSize: null
+            isOpen: false
         }
     },
-    mounted() {
-        const files = this.$store.getters['files/getFiles']
-        // in files find the file with the biggest size
-        if (files.length > 0) {
-            this.biggestFile = files.reduce((a, b) => a.size > b.size ? a : b)
-            this.newestFile = files.reduce((a, b) => a.created_at > b.created_at ? a : b)
-            this.totalSize = files.length === 1 ? files[0].size : files.reduce((a, b) => a.size + b.size)
+    computed: {
+        files() {
+            return this.$store.getters['files/getFiles']
+        },
+        biggestFile() {
+            return this.files.reduce((a, b) => a.size > b.size ? a : b)
+        },
+        newestFile() {
+            return this.files.reduce((a, b) => a.created_at > b.created_at ? a : b)
+        },
+        totalSize() {
+            return this.files.reduce((acc, val) => acc + val.size, 0)
         }
-        this.numberOfFiles = files.length
     },
     methods: {
         close() {

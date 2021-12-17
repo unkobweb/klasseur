@@ -90,7 +90,21 @@ export default {
     },
     computed: {
         files() {
-            return this.$store.getters['files/getFiles'];
+            // if no research tags, return all files
+            const researchTags = this.$store.getters['files/getResearchTags']
+            const files = this.$store.getters['files/getFiles']
+            if (researchTags.length === 0) {
+                return files
+            } else {
+                // calculate score for each file
+                const scoredFiles = this.attributeScore(files, researchTags)
+                // sort files by score
+                const sortedFiles = scoredFiles.sort(this.sortByScoreDesc)
+                return sortedFiles
+            }
+        },
+        researchTags() {
+            return this.$store.getters['files/getResearchTags'];
         },
         selectedFile() {
             return this.$store.getters['files/getSelectedFile'];
@@ -119,6 +133,56 @@ export default {
                     window.open(response.url, '_blank');
                 })
         },
+        attributeScore(fileArray, tags){
+            let finalArray = []
+            fileArray.forEach(file => {
+                let exactMatchScore = 0;
+                let partialMatchScore = 0;
+                tags.forEach(propsTag => {
+                    file.tags.forEach(tag => {
+                        let partialScore = this.compareWords(tag.value, propsTag)
+                        if (tag.tag == propsTag){
+                            exactMatchScore++;
+                        } else if (partialScore > 30){
+                            partialMatchScore += partialScore
+                        }
+                    })
+                })
+                file.partialMatchScore = partialMatchScore
+                file.exactMatchScore = exactMatchScore
+                finalArray.push(file)
+            })
+            return finalArray
+        },
+        sortByScoreDesc(a,b){
+            if (b.exactMatchScore == a.exactMatchScore){
+                if (b.partialMatchScore == a.partialMatchScore){
+                    return new Date(b.updated_at) - new Date(a.updated_at)
+                }
+                return b.partialMatchScore - a.partialMatchScore
+            }
+            return b.exactMatchScore - a.exactMatchScore
+        },
+        compareWords(word1,word2){
+            let smaller = word1.length <= word2.length ? word1 : word2
+            let bigger = word1.length > word2.length ? word1 : word2
+            
+            let reductor = 0
+            let matchedAt = null
+            
+            while(reductor < smaller.length && !matchedAt){
+            let startSplited = smaller.substring(reductor,smaller.length)
+            let endSplited = smaller.substring(0,smaller.length-reductor)
+            
+            if (bigger.includes(startSplited,0) || bigger.includes(endSplited,0)){
+                matchedAt = (smaller.length-reductor)
+            } else {
+                reductor++
+            }
+            }
+        
+            return matchedAt ? (matchedAt / bigger.length)*100 : 0
+        }
     }
 }
 </script>

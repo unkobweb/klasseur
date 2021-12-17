@@ -2,7 +2,7 @@
     <div>
         <CModalBody>
             <div>
-                <TagsInput title="Tags du document" @updateTags="updateTags" :purposedTags="purposedTags" classname="upload-tags" />
+                <TagsInput title="Tags du document" @updateTags="updateTags" :defaultTags="tags" :purposedTags="purposedTags" classname="upload-tags" />
             </div>
         </CModalBody>
         <CModalFooter>
@@ -20,19 +20,15 @@ export default {
     data() {
         return {
             tag: "",
-            purposedTags: []
-        }
-    },
-    computed: {
-        tags() {
-            return this.$store.getters['upload/getState'].tags;
+            purposedTags: [],
+            tags: []
         }
     },
     methods: {
         updateTags(tags) {
-            console.log("WILL CALL STORE", tags)
-            this.$store.dispatch('upload/setTags', tags)
-        }
+            this.tags = tags
+            this.$store.dispatch('upload/setTags', [...tags])
+        },
     },
     mounted() {
         const months = ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre']

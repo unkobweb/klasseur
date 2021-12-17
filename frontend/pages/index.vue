@@ -1,7 +1,7 @@
 <template>
     <div class="index-container">
         <CHeading as="h1" size="md" text-align="center" mb="5">Klasseur</CHeading>
-        <TagsInput />
+        <TagsInput @updateTags="updateTags" />
         <FilesTable />
         <UploadFile />
     </div>
@@ -33,6 +33,16 @@ export default {
         await $axios.$get('/api/documents/me').then(response => {
             store.dispatch('files/setFiles', response);
         });
+    },
+    data() {
+        return {
+            tags: []
+        }
+    },
+    methods: {
+        updateTags(tags) {
+            this.$store.dispatch('files/setResearchTags', [...tags]);
+        }
     }
 }
 </script>
