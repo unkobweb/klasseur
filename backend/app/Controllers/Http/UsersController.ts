@@ -21,6 +21,7 @@ export default class UsersController {
         const {password} = await request.validate(ChangePasswordValidator);
 
         user.password = password;
+        user.need_change_password = false;
 
         await user.save();
 

@@ -22,7 +22,7 @@ import FileTable from '@/components/FilesTable'
 import TagsInput from '@/components/TagsInput'
 
 export default {
-    middleware: 'auth',
+    middleware: ['auth', 'needChangePassword'],
     components: {
         CHeading,
         UploadFile,

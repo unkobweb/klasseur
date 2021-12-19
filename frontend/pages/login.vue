@@ -27,11 +27,20 @@
                 </CFormControl>
                 <CFormControl mb="5">
                     <CFormLabel mb="1">Mot de passe</CFormLabel>
-                    <CInput
-                        class="login-input"
-                        type="password"
-                        v-model="login.password"
-                    />
+                    <CInputGroup>
+                        <CInput
+                            class="login-input"
+                            :type="showPassword ? 'text' : 'password'"
+                            v-model="login.password"
+                        />
+                        <CInputRightElement>
+                            <CIconButton
+                                :icon="showPassword ? 'eye-slash' : 'eye'"
+                                :aria-label="showPassword ? 'Cacher le mot de passe' : 'Afficher le mot de passe'"
+                                @click="showPassword = !showPassword"
+                            />
+                        </CInputRightElement>
+                    </CInputGroup>
                 </CFormControl>
                 <CStack class="login-buttons">
                     <CButton :is-loading="loading" variant-color="blue" variant='solid' rightIcon="arrow-forward" @click="loginUser">
@@ -76,35 +85,17 @@
 </style>
 
 <script>
-import {
-    CBox,
-    CHeading,
-    CFormControl,
-    CFormLabel,
-    CInput,
-    CButton,
-    CStack
-} from '@chakra-ui/vue'
-
 export default {
     layout: "login",
     data(){
         return {
             loading: false,
+            showPassword: false,
             login: {
                 email: '',
                 password: ''
             }
         }
-    },
-    components: {
-        CBox,
-        CHeading,
-        CFormControl,
-        CFormLabel,
-        CInput,
-        CButton,
-        CStack
     },
     methods: {
         async loginUser(){
