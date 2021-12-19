@@ -6,8 +6,8 @@ export default class CreateUserValidator {
   }
 
   public schema = schema.create({
-	  username: schema.string({trim: true}, [
-		  rules.unique({table: 'users', column: 'username'})
+	  email: schema.string({trim: true}, [
+		  rules.unique({table: 'users', column: 'email'})
 	  ]),
 	  password: schema.string({trim: true}, [
 		  rules.confirmed('passwordConfirmed')
@@ -26,8 +26,8 @@ export default class CreateUserValidator {
 	 *
 	 */
   public messages = {
-	  'username.required': 'You must provide a username',
-	  'username.unique': 'username is already used',
+	  'email.required': 'You must provide a email',
+	  'email.unique': 'Email is already used',
 	  'password.required': 'You must provide a password',
 	  'passwordConfirmed.confirmed': 'You must confirm the password'
   }

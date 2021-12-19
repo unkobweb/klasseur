@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
-    "start": "node server.js"
+    "migrate": "node ace migration:run --force=true",
+    "seed": "node ace db:seed",
+    "start": "node ./build/server.js",
+    "deploy": "node ace migration:run --force=true && node ace db:seed && node ace build --production --ignore-ts-errors && node ./build/server.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.3.7",
@@ -18,6 +21,7 @@
   "dependencies": {
     "@adonisjs/auth": "^8.0.10",
     "@adonisjs/core": "^5.4.0",
+    "@adonisjs/drive-s3": "^1.0.5",
     "@adonisjs/lucid": "^16.2.1",
     "@adonisjs/repl": "^3.1.7",
     "luxon": "^2.0.2",

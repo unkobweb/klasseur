@@ -54,7 +54,7 @@
 }
 .login-buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     width: 100%;
     justify-content: space-between;
     align-items: center;

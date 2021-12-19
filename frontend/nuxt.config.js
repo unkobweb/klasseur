@@ -15,6 +15,8 @@ export default {
     ]
   },
 
+  ssr: process.env.SSR || true,
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -83,7 +85,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.API_URL || 'http://localhost:3333',
+    baseURL: 'http://localhost:3333'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

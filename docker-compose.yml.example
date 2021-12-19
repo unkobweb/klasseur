@@ -1,0 +1,49 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  api:
+    build: ./backend
+    ports:
+      - "3333:3333"
+    volumes:
+      - /var/lib/klasseur:/srv/klasseur/tmp/uploads
+    depends_on:
+      - db
+    environment:
+      - PORT=3333
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - APP_KEY=BMtrxYCZcIxEJEVZ0FgXXUkfmKtutZbu
+      - DRIVE_DISK=s3
+      - DB_CONNECTION=mysql
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=klasseur
+      - MYSQL_PASSWORD=astrongpassword
+      - MYSQL_DB_NAME=klasseur
+      - S3_KEY=SCWC1GEWXD17S6AJ25H3
+      - S3_SECRET=c0875f46-17db-444e-9b03-194efcf7451d
+      - S3_BUCKET=klasseur
+      - S3_REGION=fr-par
+      - S3_ENDPOINT=https://s3.fr-par.scw.cloud
+  web:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      - HOST=0.0.0.0
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+  db:
+    image: mariadb
+    volumes:
+      - /var/lib/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_USER=klasseur
+      - MYSQL_PASSWORD=astrongpassword
+      - MYSQL_DATABASE=klasseur

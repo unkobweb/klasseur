@@ -5,15 +5,15 @@ import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class UsersController {
     async create({request}: HttpContextContract){
-        const {username, password} = await request.validate(CreateUserValidator);
+        const {email, password} = await request.validate(CreateUserValidator);
 
         const newUser = new User();
-        newUser.username = username;
+        newUser.email = email;
         newUser.password = password;
         await newUser.save();
 
         // Find again to get the uuid of created user in the response
-        return await User.findBy('username',newUser.username);
+        return await User.findBy('email',newUser.email);
     }
 
     async changePassword({request, auth, response}: HttpContextContract) {

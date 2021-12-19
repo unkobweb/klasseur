@@ -29,7 +29,7 @@ Route.group(() => {
     Route.get('/auth/logout',"AuthController.logout")
 
     Route.group(() => {
-      Route.post('/',"UsersController.create").middleware('isRoot');
+      Route.post('/',"UsersController.create");
       Route.patch('/change-password', "UsersController.changePassword");
     }).prefix('/user');
 
