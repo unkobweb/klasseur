@@ -20,11 +20,11 @@ services:
       - MYSQL_USER=klasseur
       - MYSQL_PASSWORD=astrongpassword
       - MYSQL_DB_NAME=klasseur
-      - S3_KEY=SCWC1GEWXD17S6AJ25H3
-      - S3_SECRET=c0875f46-17db-444e-9b03-194efcf7451d
-      - S3_BUCKET=klasseur
-      - S3_REGION=fr-par
-      - S3_ENDPOINT=https://s3.fr-par.scw.cloud
+      - S3_KEY=
+      - S3_SECRET=
+      - S3_BUCKET=
+      - S3_REGION=
+      - S3_ENDPOINT=
   web:
     build: ./frontend
     ports:
