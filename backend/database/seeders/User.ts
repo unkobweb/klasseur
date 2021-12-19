@@ -10,6 +10,7 @@ export default class UserSeeder extends BaseSeeder {
       const user = new User()
       user.email = "sieg.alexandre@gmail.com"
       user.password = "123456"
+      user.is_admin = true
       await user.save()
     }
   }

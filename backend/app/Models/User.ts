@@ -17,10 +17,10 @@ export default class User extends BaseModel {
   public password: string;
 
   @column()
-  public isAdmin: boolean;
+  public is_admin: boolean;
 
   @column()
-  public needChangePassword: boolean;
+  public need_change_password: boolean;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -8,8 +8,8 @@ export default class Users extends BaseSchema {
       table.uuid('uuid').primary();
       table.string('email').notNullable();
       table.string('password').notNullable();
-      table.boolean('isAdmin').defaultTo(false).notNullable();
-      table.boolean('needChangePassword').defaultTo(true).notNullable();
+      table.boolean('is_admin').defaultTo(false).notNullable();
+      table.boolean('need_change_password').defaultTo(true).notNullable();
       table.timestamps(true,true);
     })
   }
