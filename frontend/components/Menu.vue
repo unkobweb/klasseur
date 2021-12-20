@@ -22,7 +22,12 @@
                 </c-drawer-body>
 
                 <c-drawer-footer>
-                    <c-button variant-color="blue" @click="disconnect">Se déconnecter</c-button>
+                    <c-button-group d="flex" justify-content="space-between" w="100%">
+                        <NuxtLink v-if="$auth.user.is_admin" to="/admin">
+                            <c-button variant-color="vue">Administration</c-button>
+                        </NuxtLink>
+                        <c-button variant-color="blue" @click="disconnect">Se déconnecter</c-button>
+                    </c-button-group>
                 </c-drawer-footer>
             </c-drawer-content>
         </c-drawer>
