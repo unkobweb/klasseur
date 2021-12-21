@@ -133,9 +133,10 @@ export default {
                     position: "top-right",
                     duration: 3000
                 })
-                this.$auth.user = await this.$auth.fetchUser();
-                this.$router.go('/');
-            }).catch(() => {
+                await this.$auth.fetchUser();
+                this.$router.push('/');
+            }).catch(err => {
+                console.log(err);
                 this.$toast({
                     title: 'Erreur',
                     description: "Une erreur est survenue",
