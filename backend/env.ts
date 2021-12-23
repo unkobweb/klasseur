@@ -31,5 +31,9 @@ export default Env.rules({
 	S3_SECRET: Env.schema.string.optional(),
 	S3_BUCKET: Env.schema.string.optional(),
 	S3_REGION: Env.schema.string.optional(),
-	S3_ENDPOINT: Env.schema.string.optional()
+	S3_ENDPOINT: Env.schema.string.optional(),
+	SMTP_HOST: Env.schema.string({ format: 'host' }),
+	SMTP_PORT: Env.schema.number(),
+	SMTP_USERNAME: Env.schema.string(),
+	SMTP_PASSWORD: Env.schema.string()
 })

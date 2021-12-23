@@ -25,6 +25,10 @@ services:
       - S3_BUCKET=
       - S3_REGION=
       - S3_ENDPOINT=
+      - SMTP_HOST=
+      - SMTP_PORT=
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
   web:
     build: ./frontend
     ports:

@@ -56,7 +56,9 @@ export default {
                     backgroundColor: 'rgba(0,0,0,0.8)',
                     callbacks: {
                         label: (tooltipItem, data) => {
-                            return data.labels[tooltipItem.datasetIndex] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + ' fichiers';
+                            const user = data.labels[tooltipItem.datasetIndex];
+                            const numberOfFiles = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return `${user}: ${numberOfFiles} ${numberOfFiles > 1 ? 'fichiers' : 'fichier'}`;
                         }
                     }
                 }

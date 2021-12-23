@@ -11,7 +11,7 @@
                     <c-heading as="h2" size="md" mb="30px">Statistiques</c-heading>
                     <c-stat mb="10" v-if="files.length > 0 && newestFile">
                         <c-stat-label>Nombre de documents</c-stat-label>
-                        <c-stat-number>{{files.length}}</c-stat-number>
+                        <c-stat-number>{{files.length}} {{files.length > 1 ? "Documents" : "Document"}}</c-stat-number>
                         <c-stat-helper-text>Dernier ajout le {{formatDate(newestFile.created_at)}}</c-stat-helper-text>
                     </c-stat>
                     <c-stat v-if="totalSize && biggestFile">

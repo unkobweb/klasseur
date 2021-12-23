@@ -41,6 +41,12 @@ Route.group(() => {
       Route.delete('/:uuid', "DocumentsController.delete")
     }).prefix('/documents')
 
+    Route.group(() => {
+      Route.get('/stats', "AdminController.stats")
+      Route.post('/auth/register', "AuthController.register")
+      Route.get('/all-users', "AdminController.allUsers")
+    }).middleware('isAdmin')
+
   }).middleware('auth');
 
 }).prefix('/api');

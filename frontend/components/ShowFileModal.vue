@@ -32,7 +32,7 @@
             </CModalContent>
             <CModalOverlay/>
         </CModal>
-        <ConfirmDelete v-if="promptDelete" @cancel="hideDeletePrompt" @confirm="confirmDeleteFile" />
+        <ConfirmModal v-if="promptDelete" @cancel="hideDeletePrompt" @confirm="confirmDeleteFile" />
     </div>
 </template>
 
@@ -49,13 +49,13 @@
 
 <script>
 import TagsInput from '@/components/TagsInput'
-import ConfirmDelete from '@/components/ConfirmDelete'
+import ConfirmModal from '@/components/ConfirmModal'
 
 export default {
     name: "ShowFileModal",
     components: {
         TagsInput,
-        ConfirmDelete
+        ConfirmModal
     },
     data() {
         return {
