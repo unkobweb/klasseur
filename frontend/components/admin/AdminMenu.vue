@@ -47,6 +47,11 @@ a:hover {
     margin-right: 20px;
     margin-bottom: 3px;
 }
+#burger-button {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
 </style>
 
 <script>
@@ -64,6 +69,7 @@ export default {
     methods: {
         setMenu(index) {
             this.$store.dispatch('admin/setMenu', index)
+            this.close()
         },
         disconnect() {
             this.$auth.logout().then(() => {
