@@ -25,7 +25,7 @@
     align-items: center;
     flex-wrap: wrap;
     cursor: text;
-    padding: 2px 6px;
+    padding: 6px 6px;
     border-radius: 5px;
 }
 .tag-input {

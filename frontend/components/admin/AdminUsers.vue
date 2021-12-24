@@ -14,7 +14,7 @@
                 <span class="user-email">{{user.email}} {{$auth.user.email === user.email ? '(Vous)': ''}}</span>
                 <span class="btn-group">
                     <CButton variant-color="blue" @click="sendMail(user.email)">Réinitialiser le mot de passe</CButton>
-                    <CButton variant-color="red" @click="deleteUser(user.email)">Supprimer l'utilisateur</CButton>
+                    <CButton variant-color="red" @click="deleteUser(user.uuid)">Supprimer l'utilisateur</CButton>
                 </span>
             </div>
         </div>
@@ -115,6 +115,7 @@ export default {
         return {
             newUserEmail: '',
             selectedEmail: '',
+            selectedUuid: '',
             promptSendMail: false,
             promptDelete: false,
             users: []
@@ -169,18 +170,36 @@ export default {
                 this.selectedEmail = null;
             });
         },
-        deleteUser(email) {
+        deleteUser(uuid) {
             this.promptDelete = true;
-            this.selectedEmail = email;
+            this.selectedUuid = uuid;
         },
         dontDelete() {
             this.promptDelete = false;
-            this.selectedEmail = null;
+            this.selectedUuid = null;
         },
         confirmDelete() {
-            this.promptDelete = false;
-            console.log(this.selectedEmail);
-            this.selectedEmail = null;
+            this.$axios.$delete(`/api/user/${this.selectedUuid}`).then(res => {
+                this.$toast({
+                    title: 'Utilisateur supprimé',
+                    description: "L'utilisateur a bien été supprimé",
+                    status: 'success',
+                    position: "top-right",
+                    duration: 3000
+                })
+            }).catch(err => {
+                this.$toast({
+                    title: 'Erreur',
+                    description: "Une erreur est survenue lors de la suppression de l'utilisateur",
+                    status: 'error',
+                    position: "top-right",
+                    duration: 3000
+                })
+            }).finally(() => {
+                this.promptDelete = false;
+                this.selectedUuid = null;
+                this.$fetch()
+            });
         }
     }
 }

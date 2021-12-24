@@ -6,7 +6,6 @@ import LoginValidator from 'App/Validators/LoginValidator';
 import RegisterValidator from 'App/Validators/RegisterValidator';
 import Env from '@ioc:Adonis/Core/Env';
 import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator';
-import { DateTime } from 'luxon';
 
 export default class AuthController {
     async login({auth, request, response}: HttpContextContract) {

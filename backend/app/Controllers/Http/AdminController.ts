@@ -36,4 +36,17 @@ export default class AdminsController {
         const users = await User.all()
         return response.json({users})
     }
+
+    async deleteUser({ params, response }: HttpContextContract) {
+        const user = await User.find(params.uuid)
+        if (!user) {
+            return response.status(404).json({
+                error: 'user not found'
+            })
+        }
+        await user.delete()
+        return response.status(200).json({
+            message: 'user deleted'
+        })
+    }
 }
