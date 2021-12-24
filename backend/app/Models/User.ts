@@ -3,6 +3,7 @@ import { BaseModel, beforeCreate, beforeSave, column, HasMany, hasMany } from '@
 import Hash from '@ioc:Adonis/Core/Hash';
 import {v4 as uuidv4} from "uuid";
 import Document from './Document';
+import ResetPasswordToken from './ResetPasswordToken';
 
 export default class User extends BaseModel {
   public static selfAssignPrimaryKey = true
@@ -33,6 +34,12 @@ export default class User extends BaseModel {
     localKey: "uuid"
   })
   public documents: HasMany<typeof Document>
+
+  @hasMany(() => ResetPasswordToken, {
+    foreignKey: "user_uuid",
+    localKey: "uuid"
+  })
+  public resetPasswordTokens: HasMany<typeof ResetPasswordToken>
 
   @beforeSave()
   public static async hashPassword(user: User) {

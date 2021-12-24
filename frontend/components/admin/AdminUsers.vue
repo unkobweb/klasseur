@@ -146,16 +146,28 @@ export default {
             this.selectedEmail = null;
         },
         confirmSendMail() {
-            console.log(this.selectedEmail);
-            this.promptSendMail = false;
-            this.$toast({
-                    title: 'Réinitialisation du mot de passe',
-                    description: `Un email à été envoyé à l'adresse ${this.selectedEmail} pour la réinitialisation du mot de passe`,
+            this.$axios.$post('/api/auth/reset-password', {
+                email: this.selectedEmail
+            }).then(res => {
+                this.$toast({
+                    title: 'Email envoyé',
+                    description: "Un email vient d'être envoyé à l'utilisateur pour la réinitialisation de son mot de passe",
                     status: 'success',
                     position: "top-right",
                     duration: 3000
                 })
-            this.selectedEmail = null;
+            }).catch(err => {
+                this.$toast({
+                    title: 'Erreur',
+                    description: "Une erreur est survenue lors de l'envoi de l'email",
+                    status: 'error',
+                    position: "top-right",
+                    duration: 3000
+                })
+            }).finally(() => {
+                this.promptSendMail = false;
+                this.selectedEmail = null;
+            });
         },
         deleteUser(email) {
             this.promptDelete = true;
