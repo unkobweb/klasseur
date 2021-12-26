@@ -48,6 +48,9 @@ Route.group(() => {
       Route.post('/auth/register', "AuthController.register")
       Route.get('/all-users', "AdminController.allUsers")
       Route.delete('/user/:uuid', "AdminController.deleteUser")
+      Route.post('/scheduler', "SchedulersController.setScheduler")
+      Route.get('/schedulers', "SchedulersController.getSchedulers")
+      Route.delete('/scheduler/:name', "SchedulersController.deleteScheduler")
     }).middleware('isAdmin')
 
   }).middleware('auth');

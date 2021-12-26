@@ -43,7 +43,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .users-container {
     padding: 20px 25px;
     background-color: #394353;

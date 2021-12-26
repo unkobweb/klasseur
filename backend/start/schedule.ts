@@ -12,9 +12,12 @@ const dbSaveSchedule = {
 }
 
 schedule.scheduleJob('*/1 * * * *', async () => {
-    const fileSaveParameter = await Parameter.query().where('name', 'file_save_schedule').first()
-    const dbSaveParameter = await Parameter.query().where('name', 'db_save_schedule').first()
+    console.log('Running scheduler');
+    const fileSaveParameter = await Parameter.query().where('name', 'file_save_scheduler').first()
+    const dbSaveParameter = await Parameter.query().where('name', 'db_save_scheduler').first()
 
+    console.log('fileSaveParameter', fileSaveParameter?.serialize());
+    console.log('dbSaveParameter', dbSaveParameter?.serialize());
     if (fileSaveParameter) {
         if (fileSaveSchedule.checksum !== sha1(JSON.stringify(fileSaveParameter))) {
             //@ts-ignore
@@ -37,6 +40,8 @@ schedule.scheduleJob('*/1 * * * *', async () => {
             dbSaveSchedule.crontab = schedule.scheduleJob(dbSaveParameter.value, async () => {
                 console.log('DB save schedule')
             });
+
+            console.log(dbSaveSchedule)
         }
     } else if (!dbSaveParameter && dbSaveSchedule.crontab) {
         //@ts-ignore
