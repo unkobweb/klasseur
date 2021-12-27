@@ -102,8 +102,6 @@ export default {
                         position: "top-right",
                         duration: 3000
                     })
-                }).finally(() => {
-                    this.$fetch()
                 })
             } else {
                 this.$toast({
@@ -125,8 +123,6 @@ export default {
                         position: "top-right",
                         duration: 3000
                     })
-                }).finally(() => {
-                    this.$fetch()
                 })
             } else {
                 this.$toast({

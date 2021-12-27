@@ -1,4 +1,4 @@
-import { faTrash, faUsers, faChartPie, faArrowLeft, faSave, faEye, faEyeSlash, faTrashAlt, faPencilAlt, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faFileAlt, faUsers, faChartPie, faArrowLeft, faSave, faEye, faEyeSlash, faTrashAlt, faPencilAlt, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -22,7 +22,9 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/infiniteloading', ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -62,7 +64,8 @@ export default {
         faUsers,
         faSave,
         faArrowLeft,
-        faChartPie
+        faChartPie,
+        faFileAlt
       }
     }
   },

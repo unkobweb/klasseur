@@ -17,6 +17,7 @@ html, body {
   min-width: 100vw;
   padding: 0;
   margin: 0;
+  background-color: #2D3748;
 }
 </style>
 

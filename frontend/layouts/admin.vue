@@ -12,6 +12,13 @@
   </div>
 </template>
 
+<style>
+html, body {
+  background-color: #2D3748;
+  overflow-x: hidden;
+}
+</style>
+
 <script>
 import AdminMenu from '@/components/admin/AdminMenu'
 export default {

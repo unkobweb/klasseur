@@ -4,6 +4,12 @@
         <AdminStats v-if="menu === 0"/>
         <AdminUsers v-if="menu === 1"/>
         <AdminSaves v-if="menu === 2"/>
+        <AdminLogs ref="logs" v-if="menu === 3"/>
+        <infinite-loading v-if="menu === 3" @infinite="infiniteScroll">
+            <template v-slot:no-more>
+                <p>Fin du journal de logs</p>
+            </template>
+        </infinite-loading>
     </div>
 </template>
 
@@ -12,6 +18,7 @@
     padding: 22px;
     max-width: 1435px;
     margin: auto;
+    overflow-y: auto;
 }
 </style>
 
@@ -19,17 +26,33 @@
 import AdminStats from '@/components/admin/AdminStats.vue';
 import AdminUsers from '@/components/admin/AdminUsers.vue';
 import AdminSaves from '@/components/admin/AdminSaves.vue';
+import AdminLogs from '@/components/admin/AdminLogs.vue';
 
 export default {
     layout: 'admin',
     components: {
         AdminStats,
         AdminUsers,
-        AdminSaves
+        AdminSaves,
+        AdminLogs
     },
     computed: {
         menu() {
             return this.$store.getters['admin/getMenu'];
+        }
+    },
+    methods: {
+        async infiniteScroll($state) {
+            console.log('infiniteScroll');
+            setTimeout(async () => {
+                const res = await this.$refs.logs.fetchLogs();
+                console.log(res.data.logs.meta.current_page === res.data.logs.meta.last_page);
+                if (res.data.logs.meta.current_page === res.data.logs.meta.last_page) {
+                    $state.complete();
+                } else {
+                    $state.loaded();
+                }
+            }, 500);
         }
     }
 }

@@ -14,6 +14,7 @@
                     <c-link :class="menuSelected === 0 ? 'active admin-menu-btn': 'admin-menu-btn'" @click="setMenu(0)"><c-icon name="chart-pie" />Statistiques</c-link>
                     <c-link :class="menuSelected === 1 ? 'active admin-menu-btn': 'admin-menu-btn'" @click="setMenu(1)"><c-icon name="users" />Gestion utilisateurs</c-link>
                     <c-link :class="menuSelected === 2 ? 'active admin-menu-btn': 'admin-menu-btn'" @click="setMenu(2)"><c-icon name="save" />Sauvegardes</c-link>
+                    <c-link :class="menuSelected === 3 ? 'active admin-menu-btn': 'admin-menu-btn'" @click="setMenu(3)"><c-icon name="file-alt" />Logs</c-link>
                 </c-drawer-body>
 
                 <c-drawer-footer>

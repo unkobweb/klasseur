@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Log from 'App/Models/Log'
 import User from 'App/Models/User'
 
 export default class AdminsController {
@@ -47,6 +48,14 @@ export default class AdminsController {
         await user.delete()
         return response.status(200).json({
             message: 'user deleted'
+        })
+    }
+
+    async getLogs({ request, response }: HttpContextContract) {
+        const page = request.qs().page || 1
+        const logs = await Log.query().orderBy('created_at','desc').paginate(page, 20)
+        return response.json({
+            logs
         })
     }
 }

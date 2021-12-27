@@ -51,6 +51,7 @@ Route.group(() => {
       Route.post('/scheduler', "SchedulersController.setScheduler")
       Route.get('/schedulers', "SchedulersController.getSchedulers")
       Route.delete('/scheduler/:name', "SchedulersController.deleteScheduler")
+      Route.get('/logs', "AdminController.getLogs")
     }).middleware('isAdmin')
 
   }).middleware('auth');
