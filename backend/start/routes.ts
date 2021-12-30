@@ -56,4 +56,14 @@ Route.group(() => {
 
   }).middleware('auth');
 
+  Route.group(() => {
+    Route.get('/config', "WizardsController.getConfig")
+    Route.post('/config', "WizardsController.setConfig")
+    Route.post('/test-drive', "WizardsController.testDrive")
+    Route.post('/test-mail', "WizardsController.testMail")
+    Route.post('/create-admin', "WizardsController.createAdmin")
+  }).middleware('wizard')
+
+  Route.get('/', () => 'Hello world')
+
 }).prefix('/api');

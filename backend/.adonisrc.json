@@ -28,6 +28,12 @@
       "environment": [
         "web"
       ]
+    },
+    {
+      "file": "./start/config",
+      "environment": [
+        "web"
+      ]
     }
   ],
   "providers": [

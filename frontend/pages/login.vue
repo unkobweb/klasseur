@@ -68,6 +68,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.login-buttons button {
+    margin-bottom: 0;
+}
 @media screen and (max-width: 520px) {
     .login-input {
         min-width: 90vw;
@@ -87,6 +90,7 @@
 <script>
 export default {
     layout: "login",
+    middleware: ["wizard"],
     data(){
         return {
             loading: false,
