@@ -1,5 +1,6 @@
 import { faTrash, faHeart, faFileAlt, faUsers, faChartPie, faArrowLeft, faSave, faEye, faEyeSlash, faTrashAlt, faPencilAlt, faFileDownload, faFolderOpen, faHamburger } from '@fortawesome/free-solid-svg-icons'
-
+console.log('nuxt.config.js')
+console.log({ env: process.env.NODE_ENV})
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -95,7 +96,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:3333'
+    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : 'http://api:3333'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

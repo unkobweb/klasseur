@@ -67,7 +67,6 @@ export default {
             }
             // send it to the API
             this.$axios.$post('/api/documents/upload', formData).then(response => {
-                console.log(response)
                 this.$store.dispatch('files/addFile', response)
                 this.$toast({
                     title: 'Fichier envoyé',

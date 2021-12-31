@@ -4,7 +4,6 @@ import SchedulerValidator from 'App/Validators/SchedulerValidator'
 
 export default class SchedulersController {
     async setScheduler({ request, response }: HttpContextContract) {
-        console.log(request.all())
         const {name, value} = await request.validate(SchedulerValidator)
         const scheduler = await Parameter.findBy('name', name)
         if (scheduler) {

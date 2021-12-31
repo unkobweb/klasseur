@@ -46,10 +46,8 @@ export default {
     },
     methods: {
         async infiniteScroll($state) {
-            console.log('infiniteScroll');
             setTimeout(async () => {
                 const res = await this.$refs.logs.fetchLogs();
-                console.log(res.data.logs.meta.current_page === res.data.logs.meta.last_page);
                 if (res.data.logs.meta.current_page === res.data.logs.meta.last_page) {
                     $state.complete();
                 } else {

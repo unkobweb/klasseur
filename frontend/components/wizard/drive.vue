@@ -59,7 +59,7 @@
             </CFormControl>
         </div>
         <CButtonGroup d="flex" :justify-content="s3 ? 'space-between' : 'flex-end'">
-            <CButton v-if="s3" variant-color="vue" @click="test">Tester la connexion</CButton>
+            <CButton v-if="s3" :is-loading="testing" loading-text="Test en cours" variant-color="vue" @click="test">Tester la connexion</CButton>
             <CButton variant-color="blue" @click="next">Suivant</CButton>
         </CButtonGroup>
     </div>
@@ -85,6 +85,7 @@
 export default {
     data() {
         return {
+            testing: false,
             s3: false,
             showPassword: false,
             s3Config: {
@@ -107,8 +108,8 @@ export default {
     },
     methods: {
         async test() {
+            this.testing = true;
             this.$axios.post('/api/test-drive', {...this.s3Config}).then(response => {
-                console.log(response);
                 const {title, description, type} = response.data;
                 this.$toast({
                     title: title,
@@ -117,6 +118,7 @@ export default {
                     position: "top-right",
                     duration: 3000
                 })
+                this.testing = false;
             })
         },
         async next() {

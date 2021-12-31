@@ -102,9 +102,6 @@ export default {
             passwordConfirmed: ''
         }
     },
-    mounted() {
-        console.log(this.$route.query.token);
-    },
     methods: {
         async sendNewPassword(){
             this.loading = true;

@@ -125,10 +125,6 @@ async function saveFiles() {
 
                 archive.pipe(output);
                 archive.finalize();
-
-
-
-                console.log('File save schedule')
             });
         }
     } else if (!fileSaveParameter && fileSaveSchedule.crontab) {

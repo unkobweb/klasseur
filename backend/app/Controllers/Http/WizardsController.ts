@@ -72,7 +72,6 @@ export default class WizardsController {
 
     async testMail({ request, response }: HttpContextContract) {
         const payload = request.all()
-        console.log(payload)
 
         const transporter = nodemailer.createTransport({
             host: payload.SMTP_HOST,

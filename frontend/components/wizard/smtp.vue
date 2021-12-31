@@ -46,7 +46,7 @@
             </CFormControl>
         </div>
         <CButtonGroup d="flex" justify-content="space-between">
-            <CButton variant-color="vue" @click="test">Tester la connexion</CButton>
+            <CButton :is-loading="testing" loading-text="Test en cours" variant-color="vue" @click="test">Tester la connexion</CButton>
             <CButtonGroup d="flex" justify-content="flex-end">
                 <CButton @click="$emit('prev')">Précédent</CButton>
                 <CButton variant-color="blue" @click="next">Suivant</CButton>
@@ -80,6 +80,7 @@
 export default {
     data() {
         return {
+            testing: false,
             showPassword: false,
             smtpConfig: {
                 SMTP_HOST: '',
@@ -98,6 +99,7 @@ export default {
     },
     methods: {
         async test() {
+            this.testing = true;
             this.$axios.post('/api/test-mail', {...this.smtpConfig}).then(response => {
                 const {title, description, type} = response.data;
                 this.$toast({
@@ -107,10 +109,10 @@ export default {
                     position: "top-right",
                     duration: 3000
                 })
+                this.testing = false;
             })
         },
         async next() {
-            console.log(this.smtpConfig)
             if (this.smtpConfig.SMTP_HOST && this.smtpConfig.SMTP_PORT && this.smtpConfig.SMTP_USERNAME && this.smtpConfig.SMTP_PASSWORD) {
                 this.$store.dispatch('wizard/setConfig', {...this.smtpConfig})
                 await this.$axios.$post('/api/config', {...this.smtpConfig})

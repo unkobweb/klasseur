@@ -69,7 +69,6 @@ export default {
         this.interval = setInterval(async () => {
             if (!this.waiting) return
             await this.$axios.$get('/api').then(response => {
-                console.log(response)
                 if (response === 'Hello world') {
                     clearInterval(this.interval)
                     this.next()

@@ -108,7 +108,6 @@ export default {
     },
     async fetch() {
         const {users} = await this.$axios.get('/api/all-users').then(res => res.data);
-        console.log(users);
         this.users = users;
     },
     data() {

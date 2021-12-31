@@ -136,7 +136,6 @@ export default {
                 await this.$auth.fetchUser();
                 this.$router.push('/');
             }).catch(err => {
-                console.log(err);
                 this.$toast({
                     title: 'Erreur',
                     description: "Une erreur est survenue",

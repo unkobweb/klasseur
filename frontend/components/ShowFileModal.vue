@@ -90,7 +90,6 @@ export default {
         downloadFile() {
             this.$axios.$get(`/api/documents/download/${this.file.uuid}`)
                 .then(response => {
-                    console.log(response)
                     // open response.url in a new tab
                     window.open(response.url, '_blank');
                 })

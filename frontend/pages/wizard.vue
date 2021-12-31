@@ -14,7 +14,6 @@
                 flex-dir="column"
                 justify-content="center"
                 align-items="center"
-                mb="200px"
             >   
                 <CHeading size="lg" mb="1">Klasseur</CHeading>
                 <CHeading size="md" mb="5">Installation</CHeading>
