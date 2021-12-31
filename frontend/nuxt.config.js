@@ -96,7 +96,14 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : 'http://api:3333'
+    proxy: true
+  },
+
+  proxy: {
+    '/api': {
+      target: process.env.NODE_ENV === 'development' ? 'http://localhost:3333/api' : 'http://api:3333/api',
+      pathRewrite: { '^/api': '' }
+    }
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

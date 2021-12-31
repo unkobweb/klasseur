@@ -32,7 +32,7 @@ export default class AuthController {
 
         await Mail.send((message) => {
             message
-              .from(Env.get('SMTP_USERNAME'))
+              .from(Env.get('SMTP_USERNAME', ''))
               .to(email)
               .subject('Creation de votre compte Klasseur')
               .text(`Bonjour, vous venez de créer votre compte sur Klasseur.fr. Votre mot de passe est ${password}`);
@@ -57,7 +57,7 @@ export default class AuthController {
 
         await Mail.send((message) => {
             message
-                .from(Env.get('SMTP_USERNAME'))
+                .from(Env.get('SMTP_USERNAME', ''))
                 .to(email)
                 .subject('Réinitialisation de votre mot de passe')
                 .text(`Bonjour, vous venez de demander la réinitialisation de votre mot de passe sur Klasseur.fr. Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant: ${url}

@@ -50,7 +50,7 @@ export default class WizardsController {
                 {
                     Bucket: payload.S3_BUCKET,
                 },
-                (err, data) => {
+                (err) => {
                     if (err) {
                         resolve({
                             type: 'error',
