@@ -7,6 +7,9 @@
 
 import Env from '@ioc:Adonis/Core/Env'
 import { MailConfig } from '@ioc:Adonis/Addons/Mail'
+import {readFileSync} from 'fs'
+
+const config = JSON.parse(readFileSync('config/parameters.json','utf-8'))
 
 const mailConfig: MailConfig = {
   /*
@@ -44,11 +47,11 @@ const mailConfig: MailConfig = {
     */
     smtp: {
       driver: 'smtp',
-      host: Env.get('SMTP_HOST'),
-      port: Env.get('SMTP_PORT'),
+      host: config.SMTP_HOST,
+      port: config.SMTP_PORT,
 			auth: {
-				user: Env.get('SMTP_USERNAME'),
-				pass: Env.get('SMTP_PASSWORD'),
+				user: config.SMTP_USERNAME,
+				pass: config.SMTP_PASSWORD,
 				type: 'login',
 			}
     },

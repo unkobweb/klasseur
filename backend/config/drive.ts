@@ -8,6 +8,9 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { DriveConfig } from '@ioc:Adonis/Core/Drive'
 import Application from '@ioc:Adonis/Core/Application'
+import {readFileSync} from 'fs'
+
+const config = JSON.parse(readFileSync('config/parameters.json','utf-8'))
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +31,7 @@ const driveConfig: DriveConfig = {
   | the `DRIVE_DISK` environment variable.
   |
   */
-  disk: Env.get('DRIVE_DISK'),
+  disk: config.DRIVE_DISK || 'local',
 
   disks: {
     /*
@@ -51,12 +54,12 @@ const driveConfig: DriveConfig = {
     s3: {
       driver: 's3',
       visibility: 'public',
-      key: Env.get('S3_KEY'),
-      secret: Env.get('S3_SECRET'),
-      region: Env.get('S3_REGION'),
+      key: config.S3_KEY,
+      secret: config.S3_SECRET,
+      region: config.S3_REGION,
       //@ts-ignore
-      bucket: Env.get('S3_BUCKET'),
-      endpoint: Env.get('S3_ENDPOINT'),
+      bucket: config.S3_BUCKET,
+      endpoint: config.S3_ENDPOINT,
     },
 
     /*

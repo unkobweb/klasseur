@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Document from 'App/Models/Document'
 import CreateDocumentValidator from 'App/Validators/CreateDocumentValidator'
 import Drive from '@ioc:Adonis/Core/Drive'
+import Env from '@ioc:Adonis/Core/Env'
 import fs from 'fs'
 import Tag from 'App/Models/Tag'
 import UpdateDocumentValidator from 'App/Validators/UpdateDocumentValidator'
@@ -18,6 +19,8 @@ export default class DocumentsController {
     }
 
     async upload({request, auth, response}: HttpContextContract){
+        //@ts-ignore
+        const drive = await Drive.use(Env.get('DRIVE_DISK'))
         const payload = await request.validate(CreateDocumentValidator)
 
         const user = await auth.authenticate()
@@ -41,16 +44,16 @@ export default class DocumentsController {
 
         await document.load('tags')
 
-        await Drive.put(`${user.uuid}/${document.filename}`, Buffer.from(fs.readFileSync(payload.file.tmpPath)))
+        await drive.put(`${user.uuid}/${document.filename}`, Buffer.from(fs.readFileSync(payload.file.tmpPath)))
         response.send(document)
     }
 
     async download({request, auth, response}: HttpContextContract){
+        //@ts-ignore
+        const drive = await Drive.use(Env.get('DRIVE_DISK'))
         const uuid = request.param('uuid')
 
         const user = await auth.authenticate()
-
-        
 
         const document = await Document.query().preload('user').where('user_uuid',user.uuid).andWhere('uuid',uuid).first()
 
@@ -58,7 +61,7 @@ export default class DocumentsController {
             return response.notFound("Document not found")
         }
 
-        const url = await Drive.getSignedUrl(`${user.uuid}/${document.filename}`, {
+        const url = await drive.getSignedUrl(`${user.uuid}/${document.filename}`, {
             expiresIn: '3mins'
         })
 
@@ -96,6 +99,8 @@ export default class DocumentsController {
     }
 
     async delete({request, auth, response}: HttpContextContract){
+        //@ts-ignore
+        const drive = await Drive.use(Env.get('DRIVE_DISK'))
         const uuid = request.param('uuid')
 
         const user = await auth.authenticate()
@@ -106,7 +111,7 @@ export default class DocumentsController {
             return response.notFound("Document not found")
         }
 
-        await Drive.delete(`${user.uuid}/${document.filename}`)
+        await drive.delete(`${user.uuid}/${document.filename}`)
 
         await document.delete()
 
