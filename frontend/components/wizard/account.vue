@@ -1,7 +1,10 @@
 <template>
     <div class="wizard-container">
         <CHeading size="sm" mb="4">Étape 3/3 - Création du compte administrateur</CHeading>
-        <p>Saisissez un email valide, vous y recevrez votre mot de passe de connexion temporaire, ce compte sera administrateur</p>
+        <CAlert status="info">
+            <CAlertIcon />
+            Saisissez un email valide, vous y recevrez votre mot de passe de connexion temporaire, ce compte sera administrateur
+        </CAlert>
         <div>
             <CFormControl mb="5" mt="4">
                 <CFormLabel mb="1">Adresse email</CFormLabel>

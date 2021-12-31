@@ -13,8 +13,8 @@
             <div class="user" v-for="user in users" :key="user.uuid">
                 <span class="user-email">{{user.email}} {{$auth.user.email === user.email ? '(Vous)': ''}}</span>
                 <span class="btn-group">
-                    <CButton variant-color="blue" @click="sendMail(user.email)">Réinitialiser le mot de passe</CButton>
-                    <CButton variant-color="red" @click="deleteUser(user.uuid)">Supprimer l'utilisateur</CButton>
+                    <CButton v-if="$auth.user.email !== user.email" variant-color="blue" @click="sendMail(user.email)">Réinitialiser le mot de passe</CButton>
+                    <CButton v-if="$auth.user.email !== user.email" variant-color="red" @click="deleteUser(user.uuid)">Supprimer l'utilisateur</CButton>
                 </span>
             </div>
         </div>

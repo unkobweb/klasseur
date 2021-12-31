@@ -11,7 +11,9 @@ export default class AuthController {
     async login({auth, request, response}: HttpContextContract) {
         const {email, password} = await request.validate(LoginValidator);
         try {
-            const token = await auth.use('api').attempt(email, password);
+            const token = await auth.use('api').attempt(email, password, {
+                expiresIn: '6hours'
+            });
             return token;
         } catch (error) {
             return response.badRequest('Invalid credentials');

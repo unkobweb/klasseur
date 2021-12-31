@@ -38,7 +38,7 @@ export default {
     props: {
         iconColor: {
             type: String,
-            default: 'red'
+            default: 'red.300'
         },
         icon: {
             type: String,

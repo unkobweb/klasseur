@@ -41,10 +41,30 @@
                 <CDivider />
             </CBox>
         </CBox>
-        <CBox v-else d="flex" mt="50px" mb="30px" text-align="center" flex-direction="column" justify-content="center" align-items="center">
+        <CAlert
+            v-else
+            status="info"
+            variant="subtle"
+            flexDirection="column"
+            justifyContent="center"
+            textAlign="center"
+            height="200px"
+            width="50%"
+            border-radius="10px"
+            margin="50px auto auto auto"
+            >
+            <CAlertIcon name="folder-open" size="40px" :mr="0" />
+            <CAlertTitle :mt="4" :mb="1" fontSize="lg">
+                Aucun fichier
+            </CAlertTitle>
+            <CAlertDescription maxWidth="sm">
+                Vous n'avez aucun document pour l'instant, appuyez sur le bouton en bas à droite pour en ajouter un.
+            </CAlertDescription>
+        </CAlert>
+        <!-- <CBox d="flex" mt="50px" mb="30px" text-align="center" flex-direction="column" justify-content="center" align-items="center">
             <CIcon name="folder-open" size="80px" mb="25px"/>
             <p>Vous n'avez aucun document pour l'instant, appuyez sur le bouton en bas à droite pour en ajouter un.</p>
-        </CBox>
+        </CBox> -->
     </div>
 </template>
 

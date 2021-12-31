@@ -18,6 +18,7 @@
             >   
                 <CHeading size="lg" mb="1">Klasseur</CHeading>
                 <CHeading size="md" mb="5">Installation</CHeading>
+                <Hello v-if="step === 0" @next="next"/>
                 <Drive v-if="step === 1" @next="next"/>
                 <Smtp v-if="step === 2" @prev="prev" @next="next"/>
                 <Account v-if="step === 3" @prev="prev" @next="next"/>
@@ -32,6 +33,7 @@ import Drive from '@/components/wizard/drive';
 import Smtp from '@/components/wizard/smtp';
 import Account from '@/components/wizard/account';
 import WaitApi from '@/components/wizard/waitApi';
+import Hello from '@/components/wizard/hello';
 
 export default {
     layout: 'login',
@@ -40,12 +42,13 @@ export default {
         Drive,
         Smtp,
         Account,
-        WaitApi
+        WaitApi,
+        Hello
     },
     data() {
         return {
             config: {},
-            step: 1,
+            step: 0,
         }
     },
     async fetch() {

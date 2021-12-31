@@ -72,6 +72,7 @@ export default {
     methods: {
         addTag(tag) {
             this.tags.push(tag)
+            this.tags.sort()
             this.$emit("updateTags", this.tags);
         },
         deleteTag(tag) {

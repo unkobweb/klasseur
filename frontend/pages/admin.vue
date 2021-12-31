@@ -9,6 +9,9 @@
             <template v-slot:no-more>
                 <p>Fin du journal de logs</p>
             </template>
+            <template v-slot:no-results>
+                <p>Fin du journal de logs</p>
+            </template>
         </infinite-loading>
     </div>
 </template>

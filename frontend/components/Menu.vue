@@ -7,9 +7,9 @@
                 <c-drawer-close-button />
                 <c-drawer-header>{{$auth.user.email}}</c-drawer-header>
 
-                <c-drawer-body>
+                <c-drawer-body v-if="files.length > 0 && newestFile">
                     <c-heading as="h2" size="md" mb="30px">Statistiques</c-heading>
-                    <c-stat mb="10" v-if="files.length > 0 && newestFile">
+                    <c-stat mb="10">
                         <c-stat-label>Nombre de documents</c-stat-label>
                         <c-stat-number>{{files.length}} {{files.length > 1 ? "Documents" : "Document"}}</c-stat-number>
                         <c-stat-helper-text>Dernier ajout le {{formatDate(newestFile.created_at)}}</c-stat-helper-text>
@@ -19,6 +19,24 @@
                         <c-stat-number>{{convertOctets(totalSize)}}</c-stat-number>
                         <c-stat-helper-text>Plus gros fichier : {{convertOctets(biggestFile.size)}}</c-stat-helper-text>
                     </c-stat>
+                </c-drawer-body>
+                <c-drawer-body v-else>
+                    <CAlert
+                        status="info"
+                        variant="subtle"
+                        flexDirection="column"
+                        justifyContent="center"
+                        textAlign="center"
+                        height="100%"
+                        >
+                        <CAlertIcon name="chart-pie" size="40px" :mr="0" />
+                        <CAlertTitle :mt="4" :mb="1" fontSize="lg">
+                            Statistiques
+                        </CAlertTitle>
+                        <CAlertDescription maxWidth="sm">
+                            Dès que vous aurez hébergé un fichier, vous trouverez ici les statistiques liées à vos fichiers.
+                        </CAlertDescription>
+                    </CAlert>
                 </c-drawer-body>
 
                 <c-drawer-footer>

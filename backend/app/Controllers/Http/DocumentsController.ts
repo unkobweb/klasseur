@@ -10,7 +10,9 @@ export default class DocumentsController {
     async me({auth, response}: HttpContextContract){
         const user = await auth.authenticate()
 
-        const documents = await Document.query().preload('user').preload('tags').where('user_uuid',user.uuid).orderBy('created_at','desc')
+        const documents = await Document.query().preload('user').preload('tags', (tagsQuery) => {
+            tagsQuery.orderBy('value', 'asc')
+        }).where('user_uuid',user.uuid).orderBy('created_at','desc')
 
         response.send(documents)
     }
@@ -86,7 +88,9 @@ export default class DocumentsController {
             })
         }
 
-        await document.load('tags')
+        await document.load('tags', (tagsQuery) => {
+            tagsQuery.orderBy('value', 'asc')
+        })
 
         response.send(document)
     }

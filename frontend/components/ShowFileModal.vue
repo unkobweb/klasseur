@@ -14,13 +14,13 @@
                         <p>{{convertOctets(file.size)}}</p>
                     </CBox>
                     <CBox>
-                        <CHeading as="h5" size="sm">Tags</CHeading>
+                        <CHeading :mb="modifyTags ? '5px' : ''" as="h5" size="sm">Tags</CHeading>
                         <TagsInput v-if="modifyTags" :defaultTags="file.tags" @updateTags="updateTags" classname="info-tags-input"/>
                         <CStack v-else :spacing="2" align-items="start" flex-wrap="wrap" is-inline>
                             <CTag cursor="default" size="sm" v-for="tag in file.tags" :key="tag.uuid" mb="1" mt="1">{{ tag.value }}</CTag>
                         </CStack>
                         <CButton mt="5px" w="100%" v-if="!modifyTags" variant="solid" size="sm" rightIcon="pencil-alt" @click="modifyTags = true">Modifier les tags</CButton>
-                        <CButton mt="5px" w="100%" v-else variant="solid" size="sm" rightIcon="check" variant-color="vue" @click="applyTagsChanges">Appliquer les modifications</CButton>
+                        <CButton mt="10px" w="100%" v-else variant="solid" size="sm" rightIcon="check" variant-color="vue" @click="applyTagsChanges">Appliquer les modifications</CButton>
                     </CBox>
                 </CModalBody>
                 <CModalFooter>
@@ -63,6 +63,9 @@ export default {
             modifyTags: false,
             newTags: []
         }
+    },
+    mounted() {
+        this.newTags = this.file.tags.map(tag => tag.value)
     },
     computed: {
         file() {
@@ -108,6 +111,7 @@ export default {
         },
         updateTags(tags) {
             this.newTags = tags
+            this.newTags.sort()
         },
         applyTagsChanges() {
             // if newTags is empty, prompt user to add tags

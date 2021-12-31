@@ -1,7 +1,10 @@
 <template>
     <div class="wizard-container">
         <CHeading size="sm" mb="4">Étape 2/3 - Configuration du serveur de mail</CHeading>
-        <p>Klasseur a besoin d'envoyer des emails, notamment pour la création de compte, ou la récupération de mot de passe</p>
+        <CAlert status="info">
+            <CAlertIcon />
+            <p>Klasseur a besoin d'envoyer des emails, notamment pour la création de compte ou la récupération de mot de passe. Vous pouvez utiliser votre compte gmail pour le faire, à l'aide de <a class="smtp-tutorial" href="https://github.com/unkobweb/klasseur#utiliser-gmail-comme-serveur-smtp" target="_blank">ce tutoriel</a></p>
+        </CAlert>
         <div>
             <CFormControl mb="5" mt="4">
                 <CFormLabel mb="1">Hôte SMTP</CFormLabel>
@@ -66,6 +69,10 @@
 }
 .wizard-container .drive-type {
     margin-bottom: 3px;
+}
+.smtp-tutorial, .smtp-tutorial:hover {
+    text-decoration: underline !important;
+    font-weight: 600;
 }
 </style>
 

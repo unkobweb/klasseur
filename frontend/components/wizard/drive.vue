@@ -1,7 +1,10 @@
 <template>
     <div class="wizard-container">
         <CHeading size="sm" mb="4">Étape 1/3 - Configuration du stockage</CHeading>
-        <p>Choisissez le type de stockage, en local ou à distance (Object Storage S3)</p>
+        <CAlert status="info">
+            <CAlertIcon />
+            Choisissez le type de stockage, en local ou à distance (Object Storage S3)
+        </CAlert>
         <CStack mt="4" mb="4" is-inline>
             <span class="drive-type">Local</span>
             <c-switch v-model="s3" color="gray" />

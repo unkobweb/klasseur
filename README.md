@@ -29,11 +29,6 @@ services:
       - MYSQL_USER=klasseur
       - MYSQL_PASSWORD=astrongpassword
       - MYSQL_DB_NAME=klasseur
-      - S3_KEY=
-      - S3_SECRET=
-      - S3_BUCKET=
-      - S3_REGION=
-      - S3_ENDPOINT=
   web:
     build: ./frontend
     ports:
@@ -59,14 +54,6 @@ services:
 ```
 
 ### Configuration
-#### Type de stockage
-```yml
-services:
-  api:
-    environment:
-      - DRIVE_DISK=s3
-```
-La variable **DISK_DRIVE** peut contenir la valeur '**local**' qui permet de réaliser le stockage des fichiers sur la machine hôte ou '**s3**' qui permet l'hébergement des fichiers sur un service S3.
 #### Stockage local
 ```yml
 services:
@@ -75,3 +62,19 @@ services:
       - /var/lib/klasseur:/srv/klasseur/tmp/uploads
 ```
 Si vous choisissez de stocker vos fichiers localement, c'est à ce chemin (*/var/lib/klasseur*) que vos fichiers seront sauvegardés sur votre machine hôte. Vous pouvez le modifier, si vous désirez les stocker ailleurs.
+
+### Tip's
+#### Utiliser Gmail comme serveur SMTP
+Il est possible d'utiliser votre compte Gmail pour permettre a Klasseur d'envoyer des emails.
+Il vous suffit d'aller sur https://myaccount.google.com/ puis dans l'onglet **Sécurité > Mots de passe des applications**
+Ensuite, choisissez un type d'application (pas d'importance) puis cliquez sur "Générer".
+Google vous donnera un mot de passe de 16 caractères.
+
+Votre configuration SMTP ressemblera donc à :
+```
+             Hote SMTP = smtp.gmail.com
+             Port SMTP = 587
+Nom d'utilisateur SMTP = votre.adresse@email.fr
+     Mot de passe SMTP = le_mot_de_passe_généré_par_google
+```
+Entrez ces informations dans la configuration de klasseur et vous pouvez ensuite la tester pour vous assurer que l'envoi de mail est bien fonctionnel

@@ -20,15 +20,6 @@ services:
       - MYSQL_USER=klasseur
       - MYSQL_PASSWORD=astrongpassword
       - MYSQL_DB_NAME=klasseur
-      - S3_KEY=
-      - S3_SECRET=
-      - S3_BUCKET=
-      - S3_REGION=
-      - S3_ENDPOINT=
-      - SMTP_HOST=
-      - SMTP_PORT=
-      - SMTP_USERNAME=
-      - SMTP_PASSWORD=
   web:
     build: ./frontend
     ports:
