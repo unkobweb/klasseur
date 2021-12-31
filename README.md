@@ -67,6 +67,7 @@ Si vous choisissez de stocker vos fichiers localement, c'est à ce chemin (*/var
 #### Utiliser Gmail comme serveur SMTP
 Il est possible d'utiliser votre compte Gmail pour permettre a Klasseur d'envoyer des emails.
 Il vous suffit d'aller sur https://myaccount.google.com/ puis dans l'onglet **Sécurité > Mots de passe des applications**
+
 Ensuite, choisissez un type d'application (pas d'importance) puis cliquez sur "Générer".
 Google vous donnera un mot de passe de 16 caractères.
 
