@@ -27,7 +27,8 @@
                         flexDirection="column"
                         justifyContent="center"
                         textAlign="center"
-                        height="100%"
+                        border-radius="5px"
+                        h="100%"
                         >
                         <CAlertIcon name="chart-pie" size="40px" :mr="0" />
                         <CAlertTitle :mt="4" :mb="1" fontSize="lg">

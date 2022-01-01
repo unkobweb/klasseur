@@ -24,11 +24,11 @@ Route.group(() => {
 
   Route.post('/auth/login', "AuthController.login")
   Route.post('/auth/change-password',"AuthController.changePassword")
+  Route.post('/auth/reset-password',"AuthController.resetPassword")
   Route.group(() => {
 
     Route.get('/auth/user',"AuthController.authenticate")
     Route.get('/auth/logout',"AuthController.logout")
-    Route.post('/auth/reset-password',"AuthController.resetPassword")
 
     Route.group(() => {
       Route.post('/',"UsersController.create");

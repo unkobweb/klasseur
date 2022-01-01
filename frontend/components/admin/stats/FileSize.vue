@@ -48,7 +48,9 @@ export default {
                 legend: {
                     display: true,
                     position: 'right',
-                    color: '#FFFFFF'
+                    labels: {
+                        fontColor: '#fff'
+                    }
                 },
                 title: {
                     display: false

@@ -30,6 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    border-radius: 5px;
 }
 .title {
     display: flex;
@@ -68,7 +69,7 @@ export default {
         parseDate(date) {
             date = new Date(date)
             // format date to dd/mm/yyyy - hh:mm:ss
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`
+            return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()} - ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`
         }
     }
 }

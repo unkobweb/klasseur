@@ -47,7 +47,10 @@ export default {
                 maintainAspectRatio: false,
                 legend: {
                     display: true,
-                    position: 'right'
+                    position: 'right',
+                    labels: {
+                        fontColor: '#fff'
+                    }
                 },
                 title: {
                     display: false
