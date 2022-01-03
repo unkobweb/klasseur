@@ -13,6 +13,12 @@
     padding: 20px 25px;
     border-radius: 10px;
 }
+@media screen and (max-width: 700px) {
+    .stat {
+        min-width: unset;
+        max-width: 100%;
+    }
+}
 </style>
 
 <script>
@@ -47,7 +53,7 @@ export default {
                 maintainAspectRatio: false,
                 legend: {
                     display: true,
-                    position: 'right',
+                    position: 'bottom',
                     labels: {
                         fontColor: '#fff'
                     }

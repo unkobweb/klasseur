@@ -45,11 +45,11 @@
             v-else
             status="info"
             variant="subtle"
+            class="no-files-alert"
             flexDirection="column"
             justifyContent="center"
             textAlign="center"
             height="200px"
-            width="50%"
             border-radius="10px"
             margin="50px auto auto auto"
             >
@@ -69,6 +69,10 @@
 </template>
 
 <style>
+.no-files-alert {
+    width: 50%;
+    min-width: 460px;
+}
 .files-table {
     width: 100%;
     border-collapse: collapse;
@@ -97,6 +101,12 @@ td {
     .mobile {
         display: none;
     }
+}
+@media screen and (max-width: 540px) {
+    .no-files-alert {
+        width: 100%;
+        min-width: unset;
+    }    
 }
 </style>
 

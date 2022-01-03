@@ -6,6 +6,7 @@ import LoginValidator from 'App/Validators/LoginValidator';
 import RegisterValidator from 'App/Validators/RegisterValidator';
 import Env from '@ioc:Adonis/Core/Env';
 import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator';
+import mjml2html from 'mjml';
 
 export default class AuthController {
     async login({auth, request, response}: HttpContextContract) {
@@ -20,7 +21,7 @@ export default class AuthController {
         }
     }
 
-    async register({request, response}: HttpContextContract){
+    async register({request, response, view}: HttpContextContract){
         const {email} = await request.validate(RegisterValidator);
         // generate a random password
         const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -30,14 +31,18 @@ export default class AuthController {
         user.password = password;
         await user.save();
 
-        await Mail.send((message) => {
+        await Mail.send(async (message) => {
             message
               .from(Env.get('SMTP_USERNAME', ''))
               .to(email)
               .subject('Creation de votre compte Klasseur')
-              .text(`Bonjour, vous venez de créer votre compte sur Klasseur.fr. Votre mot de passe est ${password}`);
-          })
-
+              .html(mjml2html(await view.render('emails/register', {
+                url: `${Env.get('WEB_URL')}/login`,
+                email: email,
+                password: password,
+            })).html);
+          });
+        
         return response.status(201).send({user: user.serialize()})
     }
 

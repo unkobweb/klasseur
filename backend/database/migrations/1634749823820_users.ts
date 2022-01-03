@@ -11,6 +11,7 @@ export default class Users extends BaseSchema {
       table.boolean('is_admin').defaultTo(false).notNullable();
       table.boolean('need_change_password').defaultTo(true).notNullable();
       table.timestamps(true,true);
+      table.unique(['email']);
     })
   }
 

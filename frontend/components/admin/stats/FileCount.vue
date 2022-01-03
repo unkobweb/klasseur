@@ -6,12 +6,25 @@
 </template>
 
 <style>
-.stat {
+/* .stat {
     width: fit-content;
     min-width: 450px;
     background-color: #394353;
     padding: 20px 25px;
     border-radius: 10px;
+} */
+.stat {
+    min-width: 400px;
+    flex: 1;
+    background-color: #394353;
+    padding: 20px 25px;
+    border-radius: 10px;
+}
+@media screen and (max-width: 700px) {
+    .stat {
+        min-width: unset;
+        max-width: 100%;
+    }
 }
 </style>
 
@@ -47,7 +60,7 @@ export default {
                 maintainAspectRatio: false,
                 legend: {
                     display: true,
-                    position: 'right',
+                    position: 'bottom',
                     labels: {
                         fontColor: '#fff'
                     }

@@ -4,7 +4,7 @@
         <div class="users-container">
             <CHeading size="sm" mb="3">Nouvel utilisateur</CHeading>
             <div class="form-input">
-                <CInput type="email" placeholder="Adresse email" />
+                <CInput type="email" placeholder="Adresse email" v-model="newUserEmail" />
                 <CButton @click="addUser">Ajouter</CButton>
             </div>
         </div>
@@ -122,10 +122,20 @@ export default {
     },
     methods: {
         addUser() {
+            if (!this.users.every(user => user.email !== this.newUserEmail)) {
+                this.$toast({
+                    title: 'Cet utilisateur existe déjà',
+                    description: "Entrez une autre adresse email ou supprimez l'utilisateur existant",
+                    status: 'info',
+                    position: "top-right",
+                    duration: 3000
+                })
+                return;
+            }
             // check if new user email is a valid mail
             if (this.newUserEmail && this.newUserEmail.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-                this.$axios.post('/api/add-user', {email: this.newUserEmail}).then(res => {
-                    this.fetch();
+                this.$axios.post('/api/auth/register', {email: this.newUserEmail}).then(res => {
+                    this.$fetch();
                 });
             } else {
                 this.$toast({

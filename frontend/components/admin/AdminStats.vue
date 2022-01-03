@@ -5,7 +5,7 @@
             <div class="stats">
                 <CStat>
                     <CStatLabel>Nombre total de fichiers</CStatLabel>
-                    <CStatNumber>{{ totalDocuments }} {{ totalDocuments > 1 ? "Documents": "Document"}}</CStatNumber>
+                    <CStatNumber>{{ totalDocuments }}&nbsp;{{ totalDocuments > 1 ? "Documents": "Document"}}</CStatNumber>
                 </CStat>
                 <CStat>
                     <CStatLabel>Taille total des fichiers</CStatLabel>
@@ -13,7 +13,7 @@
                 </CStat>
                 <CStat>
                     <CStatLabel>Nombre total d'utilisateurs</CStatLabel>
-                    <CStatNumber>{{ totalUsers }} {{ totalUsers > 1 ? "Utilisateurs": "Utilisateur"}}</CStatNumber>
+                    <CStatNumber>{{ totalUsers }}&nbsp;{{ totalUsers > 1 ? "Utilisateurs": "Utilisateur"}}</CStatNumber>
                 </CStat>
             </div>
             <FileSize :documentSize="documentSize" />
@@ -45,6 +45,14 @@
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 20px;
+}
+@media screen and (max-width: 700px) {
+    .stats {
+        flex-direction: column;
+    }
+    .stats > *:not(:first-child) {
+        margin-top: 15px;
+    }
 }
 </style>
 
