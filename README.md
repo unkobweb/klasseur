@@ -22,7 +22,7 @@ services:
       - HOST=0.0.0.0
       - NODE_ENV=production
       - APP_KEY=BMtrxYCZcIxEJEVZ0FgXXUkfmKtutZbu
-      - DRIVE_DISK=s3
+      - WEB_URL=http://127.0.0.1:3000
       - DB_CONNECTION=mysql
       - MYSQL_HOST=db
       - MYSQL_PORT=3306

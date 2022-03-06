@@ -32,7 +32,7 @@ export default {
     },
     mounted() {
         const months = ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre']
-        this.purposedTags = [new Date().getFullYear(), months[new Date().getMonth()], `${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`]
+        this.purposedTags = [new Date().getFullYear(), months[new Date().getMonth()], `${String(new Date().getDate()).padStart(2, '0')}-${String(new Date().getMonth()+1).padStart(2, '0')}-${new Date().getFullYear()}`]
     }
 }
 </script>

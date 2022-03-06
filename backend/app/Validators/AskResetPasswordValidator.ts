@@ -1,14 +1,13 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class RegisterValidator {
+export default class AskResetPasswordValidator {
   constructor (protected ctx: HttpContextContract) {
   }
 
   public schema = schema.create({
 	email: schema.string({trim: true}, [
-		rules.email(),
-		rules.unique({ table: 'users', column: 'email' })
+		rules.email()
 	]),
   })
 
@@ -25,7 +24,6 @@ export default class RegisterValidator {
 	 */
   public messages = {
 	"email.required": "You must provide an email",
-	"email.email": "You must provide a valid email",
-	"email.unique": "This email is already in use"
+	"email.email": "You must provide a valid email"
   }
 }

@@ -36,6 +36,7 @@
     border: none;
     box-shadow: none;
     padding: 0;
+    background: rgba(0, 0, 0, 0);
 }
 .tag-input:focus {
     box-shadow: none;

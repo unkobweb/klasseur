@@ -7,6 +7,7 @@ import RegisterValidator from 'App/Validators/RegisterValidator';
 import Env from '@ioc:Adonis/Core/Env';
 import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator';
 import mjml2html from 'mjml';
+import AskResetPasswordValidator from 'App/Validators/AskResetPasswordValidator';
 
 export default class AuthController {
     async login({auth, request, response}: HttpContextContract) {
@@ -46,8 +47,8 @@ export default class AuthController {
         return response.status(201).send({user: user.serialize()})
     }
 
-    async resetPassword({request, response}: HttpContextContract){
-        const {email} = await request.validate(RegisterValidator);
+    async resetPassword({request, response, view}: HttpContextContract){
+        const {email} = await request.validate(AskResetPasswordValidator);
         const user = await User.findBy('email', email);
         
         if(!user){
@@ -60,13 +61,14 @@ export default class AuthController {
 
         const url = `${Env.get('WEB_URL')}/reset-password?token=${token.uuid}`;
 
-        await Mail.send((message) => {
+        await Mail.send(async (message) => {
             message
                 .from(Env.get('SMTP_USERNAME', ''))
                 .to(email)
                 .subject('Réinitialisation de votre mot de passe')
-                .text(`Bonjour, vous venez de demander la réinitialisation de votre mot de passe sur Klasseur.fr. Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant: ${url}
-                `);
+                .html(mjml2html(await view.render('emails/reset', {
+                    url: url
+                })).html);
         })
 
         return response.status(201).send({user: user.serialize()})
